@@ -29,17 +29,18 @@ public class PieView extends View {
     private Paint mPaint;
     private int mWidth; //宽
     private int mHight; // 高
+    private  float startAngle=0;
     private ArrayList<PieData> mData; //数据集
 
     public PieView(Context context) {
         super(context);
     }
 
+
     public PieView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         initPaint();
     }
-
 
     public PieView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
@@ -65,8 +66,6 @@ public class PieView extends View {
         mPaint.setStyle(Paint.Style.FILL);
         mPaint.setAntiAlias(true);
     }
-
-    private  float startAngle=0;
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
@@ -92,11 +91,6 @@ public class PieView extends View {
 
     }
 
-    public void setStartAngle(float angle){
-        this.startAngle=angle;
-        invalidate();
-    }
-
     /**
      * 设置数据
      * @param arrayList
@@ -116,5 +110,14 @@ public class PieView extends View {
 
         //刷新
         invalidate();
+    }
+
+    public void setStartAngle(float angle){
+        this.startAngle=angle;
+        invalidate();
+    }
+
+    public  void setColors(int [] colors){
+        this.colors=colors;
     }
 }
