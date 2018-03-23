@@ -8,7 +8,8 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
-import com.nextoneday.customview.bean.PieData;
+import com.nextoneday.customview.fragment.HistogramFragment;
+import com.nextoneday.customview.fragment.PieFragment;
 import com.nextoneday.customview.view.PieView;
 
 import java.util.ArrayList;
@@ -18,6 +19,8 @@ public class MainActivity extends AppCompatActivity {
 
     private PieView mPieview;
     private ViewPager mViewPager;
+    private ArrayList<Fragment> mAl;
+    private TabLayout mTablayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,50 +28,62 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         initView();
-        initData();
+        initDatas();
 
     }
 
     private void initView() {
         mViewPager = findViewById(R.id.viewpager);
-        TabLayout tablayout =findViewById(R.id.tablayout);
+        mTablayout = findViewById(R.id.tablayout);
+
 
     }
 
-    private void  initDatas(){
+    public String[] titles = {"饼图","下拉选择框"};
 
-        ArrayList<Fragment> list = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
+    private void initDatas() {
 
-        }
+        mAl = new ArrayList<>();
+
+        mAl.add(PieFragment.newinstance());
+        mAl.add(HistogramFragment.newinstance());
+
+
         mViewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
             public Fragment getItem(int position) {
-                return null;
+                return mAl.get(position);
             }
 
             @Override
             public int getCount() {
-                return 0;
+                return mAl.size();
+            }
+
+            @Override
+            public CharSequence getPageTitle(int position) {
+              return  titles[position];
             }
         });
 
+        mTablayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                mViewPager.setCurrentItem(tab.getPosition(),true);
+            }
 
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
 
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
+        mTablayout.setupWithViewPager(mViewPager);
     }
-    private void initData() {
 
-        ArrayList<PieData> arrayList= new ArrayList<>();
-        int sum=0;
-        for (int x = 0; x < 6; x++) {
-            double value = Math.random() * 100;
-            sum+=value;
-            PieData pie = new PieData("i+1",value);
-            arrayList.add(pie);
-
-        }
-
-        mPieview.setViewData(arrayList,sum);
-
-    }
 }
