@@ -21,6 +21,10 @@ import java.util.ArrayList;
 
 /**
  * Created by Administrator on 2018/3/23.
+ *
+ *
+ * 还应该提供一个接口回调，然后外部进行选择监听
+ * 删除监听，
  */
 
 public class SpinnerView extends RelativeLayout implements View.OnClickListener, AdapterView.OnItemClickListener {
@@ -65,10 +69,6 @@ public class SpinnerView extends RelativeLayout implements View.OnClickListener,
         this.mdata=mdata;
     }
 
-    /**
-     * 还应该提供一个选择回调监听
-     *
-     */
 
 
     private void initEvent() {
