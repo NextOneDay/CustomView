@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import com.nextoneday.customview.fragment.HistogramFragment;
 import com.nextoneday.customview.fragment.LoadingFragment;
 import com.nextoneday.customview.fragment.PieFragment;
+import com.nextoneday.customview.fragment.SwitchFragment;
 import com.nextoneday.customview.view.PieView;
 
 import java.util.ArrayList;
@@ -21,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
     private PieView mPieview;
     private ViewPager mViewPager;
     private ArrayList<Fragment> mAl;
-    public String[] titles = {"饼图","下拉选择框","进度条"};
+    public String[] titles = {"饼图","下拉选择框","进度条","切换开关"};
 
     private TabLayout mTablayout;
 
@@ -49,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
         mAl.add(PieFragment.newinstance());
         mAl.add(HistogramFragment.newinstance());
         mAl.add(LoadingFragment.newInstance());
+        mAl.add(SwitchFragment.newInstance());
 
 
 
