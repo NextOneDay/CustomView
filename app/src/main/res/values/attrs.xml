@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="my_view">
+
+        <!--每条线的粗细-->
+        <attr name="paintBold" format="dimension" />
+        <!--每条线的长度-->
+        <attr name="lineLength" format="dimension" />
+        <!--线条个数-->
+        <attr name="lines" format="integer" />
+        <!--最大进度-->
+        <attr name="max" format="integer" />
+        <!--当前进度-->
+        <attr name="progress" format="integer" />
+        <!--背景菊花颜色-->
+        <attr name="backgroundColor" format="reference|color" />
+        <!--前景菊花颜色-->
+        <attr name="beforeColor" format="reference|color" />
+        <!--进度文字颜色-->
+        <attr name="textColor" format="reference|color" />
+
+    </declare-styleable>
+
+
+
+</resources>

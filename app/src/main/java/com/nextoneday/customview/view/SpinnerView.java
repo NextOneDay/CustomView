@@ -91,7 +91,7 @@ public class SpinnerView extends RelativeLayout implements View.OnClickListener,
             mWindow.setWidth(mEditText.getWidth());
             mWindow.setHeight(LayoutParams.WRAP_CONTENT);
             ListView contentView = new ListView(getContext());
-            contentView.setVerticalScrollBarEnabled(true);
+            contentView.setVerticalScrollBarEnabled(false);
             contentView.setAdapter(mAdapter);
             mWindow.setContentView(contentView);
             contentView.setOnItemClickListener(this);

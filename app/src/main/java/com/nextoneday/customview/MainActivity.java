@@ -9,6 +9,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
 import com.nextoneday.customview.fragment.HistogramFragment;
+import com.nextoneday.customview.fragment.LoadingFragment;
 import com.nextoneday.customview.fragment.PieFragment;
 import com.nextoneday.customview.view.PieView;
 
@@ -20,6 +21,8 @@ public class MainActivity extends AppCompatActivity {
     private PieView mPieview;
     private ViewPager mViewPager;
     private ArrayList<Fragment> mAl;
+    public String[] titles = {"饼图","下拉选择框","进度条"};
+
     private TabLayout mTablayout;
 
     @Override
@@ -39,16 +42,17 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public String[] titles = {"饼图","下拉选择框"};
-
     private void initDatas() {
 
         mAl = new ArrayList<>();
 
         mAl.add(PieFragment.newinstance());
         mAl.add(HistogramFragment.newinstance());
+        mAl.add(LoadingFragment.newInstance());
 
 
+
+        mTablayout.setupWithViewPager(mViewPager);
         mViewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
             public Fragment getItem(int position) {
@@ -83,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        mTablayout.setupWithViewPager(mViewPager);
+        mViewPager.setCurrentItem(mAl.size()-1);
     }
 
 }
