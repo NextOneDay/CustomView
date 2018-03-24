@@ -15,7 +15,7 @@
         android:id="@+id/circle"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:background="#000000"
+
         android:layout_centerHorizontal="true"
         android:layout_below="@id/flower"
         android:layout_marginTop="50dp" />
@@ -24,7 +24,6 @@
     <Button
         android:text="start"
         android:id="@+id/start"
-
         android:layout_width="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
