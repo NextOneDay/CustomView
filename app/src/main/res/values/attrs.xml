@@ -43,5 +43,4 @@
         <attr name="sb_background" format="reference|color"/>
         <attr name="sb_enable_effect" format="reference|boolean"/>
     </declare-styleable>
-
 </resources>
