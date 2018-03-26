@@ -11,6 +11,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Scroller;
 
 import com.nextoneday.customview.R;
 
@@ -35,8 +36,13 @@ public class LockView extends View {
     private Bitmap mBitmap;
     private int max;
 
+    private Scroller mScroller;
+    private OnUnlockListener onUnlockListener;
+
     public LockView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
+        mBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.switch_button);
+        mScroller= new Scroller(context);
     }
 
     /**
@@ -47,7 +53,9 @@ public class LockView extends View {
      */
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+
+        int size = MeasureSpec.getSize(widthMeasureSpec);
+        setMeasuredDimension(size,mBitmap.getHeight());
 
         initPaint();
     }
@@ -71,10 +79,9 @@ public class LockView extends View {
 
     private void initData() {
 
-        mBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.jiesuo_button);
 
         mRect = new RectF(0, 0, mWidth / 4, mHeight);
-        max = mWidth - mBitmap.getWidth();
+        max = getWidth() - mBitmap.getWidth();
     }
 
     /**
@@ -99,6 +106,13 @@ public class LockView extends View {
     }
 
     @Override
+    public boolean dispatchTouchEvent(MotionEvent event) {
+        getParent().requestDisallowInterceptTouchEvent(true);
+        return super.dispatchTouchEvent(event);
+
+    }
+
+    @Override
     public boolean onTouchEvent(MotionEvent event) {
 
         switch (event.getAction()) {
@@ -110,21 +124,21 @@ public class LockView extends View {
                 }
 
                 //偏移量为左正右负， 当前位置-移动的位置
-                int scrolloffset1 = (int) -(Math.abs(mDownX - mBitmap.getWidth() / 2));
+                int scrolloffset1 =-(int)(mDownX - mBitmap.getWidth() / 2);
                 if (scrolloffset1 > 0) {
                     scrolloffset1 = 0;
                 }
-                scrollTo(scrolloffset1, 0);
 
+                scrollTo(scrolloffset1, 0);
 
                 break;
             case MotionEvent.ACTION_MOVE:
                 float moveX = event.getX();
                 Log.d(TAG,moveX+"::move");
-                int scrolloffset2 = (int) -(Math.abs(moveX - mBitmap.getWidth() / 2));
+                int scrolloffset2 = -(int) (moveX - mBitmap.getWidth() / 2);
 
                 if (scrolloffset2 < -max) {
-                    scrolloffset2 = max;
+                    scrolloffset2 =- max;
                 } else if (scrolloffset2 > 0) {
                     scrolloffset2 = 0;
                 }
@@ -134,10 +148,19 @@ public class LockView extends View {
                 break;
             case MotionEvent.ACTION_UP:
               Log.d(TAG, "event.getX():" + event.getX());
-                int upX = (int) (Math.abs(event.getX() - mBitmap.getWidth() / 2));
+                int upX = (int) (event.getX() - mBitmap.getWidth() / 2);
                 if(upX<max){
-                    scrollTo(0,0);
+                    int startX= getScrollX() ;
+                    int startY =0;
+                    int dx  =0-startX;
+                    int dy =0;
+                    //设置缓慢滑动
+                    mScroller.startScroll(startX,startY,dx,dy,1000);
                     invalidate();
+                }else {
+                    if(onUnlockListener!=null){
+                        onUnlockListener.onUnlock();
+                    }
                 }
 
                 break;
@@ -147,5 +170,25 @@ public class LockView extends View {
                 break;
         }
         return true;
+    }
+
+    @Override
+    public void computeScroll() {
+        if (mScroller.computeScrollOffset()){
+            scrollTo(mScroller.getCurrX(),0);
+            invalidate();
+        }
+    }
+
+    public void resetView() {
+        scrollTo(0,0);
+        invalidate();
+    }
+
+    public interface  OnUnlockListener{
+       void  onUnlock();
+    }
+    public void setOnUnlockListener(OnUnlockListener l){
+        this.onUnlockListener =l;
     }
 }

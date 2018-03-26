@@ -5,11 +5,9 @@
 
     <com.nextoneday.customview.view.LockView
         android:layout_width="300dp"
-        android:layout_height="50dp"
-        android:id="@+id/unlock"
         android:layout_alignParentBottom="true"
-        android:background="@drawable/bg_shape_lock"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="40dp"
-    />
+        android:background="@drawable/bg_shape_lock"
+        android:layout_marginBottom="50dp"
+        android:layout_height="50dp" />
 </RelativeLayout>
