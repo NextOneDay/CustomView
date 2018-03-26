@@ -8,6 +8,7 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -23,6 +24,7 @@ import com.nextoneday.customview.R;
 
 public class LockView extends View {
 
+    private static final String TAG = "LockView";
     private RectF mRect;
     private RectF mBackgroupRect;
     private int mWidth;
@@ -31,7 +33,7 @@ public class LockView extends View {
     private float mDownX;
     private float mDownY;
     private Bitmap mBitmap;
-    private int mScrolloffset2;
+    private int max;
 
     public LockView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -66,23 +68,25 @@ public class LockView extends View {
     }
 
     int size = 5;
-    int blockWidth=mWidth/4;
+
     private void initData() {
 
-        mBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.icons_time);
+        mBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.jiesuo_button);
 
-        mRect = new RectF(0, 0, mWidth/4, mHeight);
+        mRect = new RectF(0, 0, mWidth / 4, mHeight);
+        max = mWidth - mBitmap.getWidth();
     }
 
     /**
      * 使用shape 来作为背景
+     *
      * @param canvas
      */
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        canvas.drawBitmap(mBitmap,0,0,mPaint);
+        canvas.drawBitmap(mBitmap, 0, 0, mPaint);
 
 //        mPaint.setColor(Color.WHITE);
 //        canvas.drawRoundRect(mRect, mHeight / 2, mHeight / 2, mPaint);
@@ -96,34 +100,45 @@ public class LockView extends View {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-//
 
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 mDownX = event.getX();
+                Log.d(TAG,mDownX+":down");
+                if (mDownX > mBitmap.getWidth()) {
+                    return false;
+                }
 
                 //偏移量为左正右负， 当前位置-移动的位置
-               int  scrolloffset1= (int) -(Math.abs(mDownX- blockWidth/2));
-               if(scrolloffset1>0){
-                   scrolloffset1=0;
-               }
-                scrollTo(scrolloffset1,0);
+                int scrolloffset1 = (int) -(Math.abs(mDownX - mBitmap.getWidth() / 2));
+                if (scrolloffset1 > 0) {
+                    scrolloffset1 = 0;
+                }
+                scrollTo(scrolloffset1, 0);
 
 
                 break;
             case MotionEvent.ACTION_MOVE:
-               float  moveX = event.getX();
-                mScrolloffset2 = (int) - (Math.abs(moveX-blockWidth/2));
-               if(mScrolloffset2 >0){
-                   mScrolloffset2 =0;
-               }else if(mScrolloffset2 <mWidth-mBitmap.getWidth()){
-                   mScrolloffset2 =mWidth-mBitmap.getWidth();
-               }
-                scrollTo(mScrolloffset2,0);
+                float moveX = event.getX();
+                Log.d(TAG,moveX+"::move");
+                int scrolloffset2 = (int) -(Math.abs(moveX - mBitmap.getWidth() / 2));
+
+                if (scrolloffset2 < -max) {
+                    scrolloffset2 = max;
+                } else if (scrolloffset2 > 0) {
+                    scrolloffset2 = 0;
+                }
+
+                scrollTo(scrolloffset2, 0);
 
                 break;
             case MotionEvent.ACTION_UP:
-
+              Log.d(TAG, "event.getX():" + event.getX());
+                int upX = (int) (Math.abs(event.getX() - mBitmap.getWidth() / 2));
+                if(upX<max){
+                    scrollTo(0,0);
+                    invalidate();
+                }
 
                 break;
 

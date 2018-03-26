@@ -5,7 +5,7 @@
 
     <com.nextoneday.customview.view.LockView
         android:layout_width="300dp"
-        android:layout_height="40dp"
+        android:layout_height="50dp"
         android:layout_alignParentBottom="true"
         android:background="@drawable/bg_shape_lock"
         android:layout_centerHorizontal="true"
