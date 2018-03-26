@@ -1,14 +1,17 @@
 package com.nextoneday.customview.view;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
+
+import com.nextoneday.customview.R;
 
 /**
  * Created by nextonedaygg on 2018/3/25.
@@ -27,6 +30,8 @@ public class LockView extends View {
     private Paint mPaint;
     private float mDownX;
     private float mDownY;
+    private Bitmap mBitmap;
+    private int mScrolloffset2;
 
     public LockView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -64,7 +69,7 @@ public class LockView extends View {
     int blockWidth=mWidth/4;
     private void initData() {
 
-        mBackgroupRect = new RectF(size, size, mWidth - size, mHeight - size);
+        mBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.icons_time);
 
         mRect = new RectF(0, 0, mWidth/4, mHeight);
     }
@@ -77,14 +82,14 @@ public class LockView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        canvas.drawRoundRect(mBackgroupRect, mHeight / 2, mHeight / 2, mPaint);
+        canvas.drawBitmap(mBitmap,0,0,mPaint);
 
-        mPaint.setColor(Color.WHITE);
-        canvas.drawRoundRect(mRect, mHeight / 2, mHeight / 2, mPaint);
-        mPaint.setShadowLayer(mHeight / 2, 10, 10, Color.GRAY);
+//        mPaint.setColor(Color.WHITE);
+//        canvas.drawRoundRect(mRect, mHeight / 2, mHeight / 2, mPaint);
+//        mPaint.setShadowLayer(mHeight / 2, 10, 10, Color.GRAY);
 
-        mPaint.setColor(Color.GREEN);
-        canvas.drawLine(mWidth / 8, mHeight * 0.25f, mWidth / 8, mHeight * 0.75f, mPaint);
+//        mPaint.setColor(Color.GREEN);
+//        canvas.drawLine(mWidth / 8, mHeight * 0.25f, mWidth / 8, mHeight * 0.75f, mPaint);
 
 
     }
@@ -98,14 +103,28 @@ public class LockView extends View {
                 mDownX = event.getX();
 
                 //偏移量为左正右负， 当前位置-移动的位置
-               int  scrolloffset= (int) -(Math.abs(mDownX- blockWidth/2));
-               scrollTo(scrolloffset,0);
+               int  scrolloffset1= (int) -(Math.abs(mDownX- blockWidth/2));
+               if(scrolloffset1>0){
+                   scrolloffset1=0;
+               }
+                scrollTo(scrolloffset1,0);
+
 
                 break;
             case MotionEvent.ACTION_MOVE:
-                break;
+               float  moveX = event.getX();
+                mScrolloffset2 = (int) - (Math.abs(moveX-blockWidth/2));
+               if(mScrolloffset2 >0){
+                   mScrolloffset2 =0;
+               }else if(mScrolloffset2 <mWidth-mBitmap.getWidth()){
+                   mScrolloffset2 =mWidth-mBitmap.getWidth();
+               }
+                scrollTo(mScrolloffset2,0);
 
+                break;
             case MotionEvent.ACTION_UP:
+
+
                 break;
 
             default:
