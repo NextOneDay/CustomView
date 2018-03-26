@@ -5,9 +5,9 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
-import android.support.annotation.ColorRes;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.View;
 
 /**
@@ -16,7 +16,6 @@ import android.view.View;
  * 1.绘制背景条
  * 2.绘制滑块
  * 3.
- *
  */
 
 public class LockView extends View {
@@ -26,6 +25,8 @@ public class LockView extends View {
     private int mWidth;
     private int mHeight;
     private Paint mPaint;
+    private float mDownX;
+    private float mDownY;
 
     public LockView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -33,6 +34,7 @@ public class LockView extends View {
 
     /**
      * 需要修改测量，因为当设置wrapcontent 的时候，范围大小不可控
+     *
      * @param widthMeasureSpec
      * @param heightMeasureSpec
      */
@@ -53,27 +55,63 @@ public class LockView extends View {
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
-        mWidth =w;
-        mHeight =h;
+        mWidth = w;
+        mHeight = h;
         initData();
     }
 
-    int size =5;
+    int size = 5;
+    int blockWidth=mWidth/4;
     private void initData() {
 
-        mBackgroupRect = new RectF(size,size,mWidth -size,mHeight-size);
-        mRect = new RectF(0,0,mWidth/4,mHeight);
+        mBackgroupRect = new RectF(size, size, mWidth - size, mHeight - size);
+
+        mRect = new RectF(0, 0, mWidth/4, mHeight);
     }
 
+    /**
+     * 使用shape 来作为背景
+     * @param canvas
+     */
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        canvas.drawRoundRect(mBackgroupRect,mHeight/2,mHeight/2,mPaint);
+        canvas.drawRoundRect(mBackgroupRect, mHeight / 2, mHeight / 2, mPaint);
 
         mPaint.setColor(Color.WHITE);
-        mPaint.setShadowLayer(mHeight/2,1,1,Color.GRAY);
-        canvas.drawRoundRect(mRect,mHeight/2,mHeight/2,mPaint);
+        canvas.drawRoundRect(mRect, mHeight / 2, mHeight / 2, mPaint);
+        mPaint.setShadowLayer(mHeight / 2, 10, 10, Color.GRAY);
 
+        mPaint.setColor(Color.GREEN);
+        canvas.drawLine(mWidth / 8, mHeight * 0.25f, mWidth / 8, mHeight * 0.75f, mPaint);
+
+
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+//
+
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                mDownX = event.getX();
+
+                //偏移量为左正右负， 当前位置-移动的位置
+               int  scrolloffset= (int) -(Math.abs(mDownX- blockWidth/2));
+               scrollTo(scrolloffset,0);
+
+                break;
+            case MotionEvent.ACTION_MOVE:
+                break;
+
+            case MotionEvent.ACTION_UP:
+                break;
+
+            default:
+
+                break;
+        }
+        return true;
     }
 }
