@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.widget.DatePicker;
 import android.widget.Toast;
 
+import com.nextoneday.customview.fragment.BannerFragment;
 import com.nextoneday.customview.fragment.HistogramFragment;
 import com.nextoneday.customview.fragment.LoadingFragment;
 import com.nextoneday.customview.fragment.LockFragment;
@@ -32,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
     private PieView mPieview;
     private ViewPager mViewPager;
     private ArrayList<Fragment> mAl;
-    public String[] titles = {"饼图", "下拉框", "进度条", "切换开关", "滑动解锁"};
+    public String[] titles = {"饼图", "下拉框", "进度条", "切换开关", "滑动解锁","轮播图"};
 
     private TabLayout mTablayout;
     private SlidingMenu mSlidingMenu;
@@ -84,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
         mAl.add(LoadingFragment.newInstance());
         mAl.add(SwitchFragment.newInstance());
         mAl.add(LockFragment.newInstance());
+        mAl.add(BannerFragment.newInstance());
 
 
         mTablayout.setupWithViewPager(mViewPager);
@@ -121,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-//        mViewPager.setCurrentItem(mAl.size()-1);
+        mViewPager.setCurrentItem(mAl.size()-1);
     }
 
     //显示一个dialog

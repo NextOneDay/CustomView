@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <android.support.v4.view.ViewPager
+        android:layout_width="match_parent"
+        android:id="@+id/viewpager"
+        android:layout_height="wrap_content">
+
+    </android.support.v4.view.ViewPager>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#88888888"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:id="@+id/tv_title"
+            android:text="广告图" />
+        <LinearLayout
+            android:id="@+id/ll_point"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+            <View
+                android:layout_width="5dp"
+                android:layout_gravity="center"
+                android:background="@drawable/shape_point"
+                android:layout_height="5dp"/>
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+</RelativeLayout>
