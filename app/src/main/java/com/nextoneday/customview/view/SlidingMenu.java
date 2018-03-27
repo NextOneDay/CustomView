@@ -22,7 +22,9 @@ public class SlidingMenu extends FrameLayout {
     private float mDownY;
     private View mMenu;
     private View mContent;
+    private boolean isOpen;
 
+    // 通过设置一个值，来提表示拖动多少,比如屏幕的百分比
     public SlidingMenu(Context context, AttributeSet attrs) {
         super(context, attrs);
         mHelper = ViewDragHelper.create(this, mCallback);
@@ -33,6 +35,7 @@ public class SlidingMenu extends FrameLayout {
         setMeasuredDimension(widthMeasureSpec, heightMeasureSpec);
         //通过google 提供的测量child 的方法进行设置，内部也是通过循环遍历child ，
         // 再通过获取child LayoutParams获取child在布局中设置的参数，再通过调用child自己的measure方法进行测量
+
         measureChildren(widthMeasureSpec, heightMeasureSpec);
     }
 
@@ -90,20 +93,20 @@ public class SlidingMenu extends FrameLayout {
             case MotionEvent.ACTION_MOVE:
                 float moveX = ev.getX();
                 float moveY = ev.getY();
-                float dx = Math.abs(moveX-mDownX);
-                float dy = Math.abs(moveY-mDownY);
+                float dx = Math.abs(moveX - mDownX);
+                float dy = Math.abs(moveY - mDownY);
 
-                if(dx>dy){
+                if (dx > dy) {
                     //水平滑动 拦截
                     // TODO: 2018/3/27 需要判断是不是viewpager这种情况，
-                    return  true;
+                    return true;
                 }
                 break;
             case MotionEvent.ACTION_UP:
                 break;
         }
 //        return mHelper.shouldInterceptTouchEvent(ev);
-        return  false;
+        return false;
     }
 
     ViewDragHelper.Callback mCallback = new ViewDragHelper.Callback() {
@@ -120,6 +123,7 @@ public class SlidingMenu extends FrameLayout {
             return true;
         }
 
+
         /**
          * 用来水平拖动child的，不管拖动左边还是右边都不能越界
          * @param child
@@ -127,23 +131,24 @@ public class SlidingMenu extends FrameLayout {
          * @param dx
          * @return
          */
+
         @Override
         public int clampViewPositionHorizontal(View child, int left, int dx) {
 
-            Log.d(TAG, "clampViewPositionHorizontal"+ child.getId()+"::"+left+"::"+dx);
+            Log.d(TAG, "clampViewPositionHorizontal" + child.getId() + "::" + left + "::" + dx);
 
-            if(child==mContent){
+            if (child == mContent) {
                 //拖动右边的时候限制他的left 不能超过左边view的宽度
-                if(left<0){
-                    left=0;
-                }else if(left>mContent.getMeasuredWidth()){
-                    left=mContent.getMeasuredWidth();
+                if (left < 0) {
+                    left = 0;
+                } else if (left > (mMenu.getMeasuredWidth())) {
+                    left = mMenu.getMeasuredWidth();
                 }
 
-            }else if (child==mMenu){
+            } else if (child == mMenu) {
                 // 拖动左边的时候限制他的left ，不能超过自己0，也就是不能整个view移除屏幕
-                if(left>0){
-                    left=0;
+                if (left > 0) {
+                    left = 0;
                 }
             }
 
@@ -164,11 +169,11 @@ public class SlidingMenu extends FrameLayout {
         public void onViewPositionChanged(View changedView, int left, int top, int dx, int dy) {
             Log.d(TAG, "onViewPositionChanged");
 
-            if(changedView==mContent){
-                mMenu.layout(mMenu.getLeft()+dx,top,mMenu.getRight()+dx,mMenu.getBottom());
+            if (changedView == mContent) {
+                mMenu.layout(mMenu.getLeft() + dx, top, mMenu.getRight() + dx, mMenu.getBottom());
 
-            }else  if(changedView==mMenu){
-                mContent.layout(mContent.getLeft()+dx,top,mContent.getRight()+dx,mContent.getBottom());
+            } else if (changedView == mMenu) {
+                mContent.layout(mContent.getLeft() + dx, top, mContent.getRight() + dx, mContent.getBottom());
             }
         }
 
@@ -185,11 +190,11 @@ public class SlidingMenu extends FrameLayout {
 
             //当拖动大于临界时， 打开侧滑菜单，
 //            当拖动小于临界值时，关闭侧滑菜单
-            int thres= mContent.getMeasuredWidth()/2;
-            if(mContent.getLeft()>=thres){
+            int thres = mMenu.getMeasuredWidth() / 2;
+            if (mContent.getLeft() > thres) {
 //                打开
                 openMenu();
-            }else{
+            } else {
 //                关闭
                 closeMenu();
             }
@@ -201,15 +206,25 @@ public class SlidingMenu extends FrameLayout {
     /**
      * 打开，平滑的滑动
      */
-    public void openMenu() {
-        int finalleft =mMenu.getMeasuredWidth();
-        mHelper.smoothSlideViewTo(mContent,finalleft,0);
+    private void openMenu() {
+        int finalleft = mMenu.getMeasuredWidth();
+        mHelper.smoothSlideViewTo(mContent, finalleft, 0);
+        isOpen = true;
         invalidate();
     }
 
     private void closeMenu() {
-        mHelper.smoothSlideViewTo(mContent,0,0);
+        mHelper.smoothSlideViewTo(mContent, 0, 0);
+        isOpen = false;
         invalidate();
+    }
+
+    public void setToggle() {
+        if (isOpen) {
+            closeMenu();
+        } else {
+            openMenu();
+        }
     }
 
     /**
@@ -218,7 +233,7 @@ public class SlidingMenu extends FrameLayout {
     @Override
     public void computeScroll() {
 
-        if(mHelper.continueSettling(true)){
+        if (mHelper.continueSettling(true)) {
 //            invalidate();
             ViewCompat.postInvalidateOnAnimation(this);
         }

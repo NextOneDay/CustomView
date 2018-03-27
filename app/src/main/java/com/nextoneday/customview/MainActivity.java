@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity implements Toolbar.OnMenuIte
         switch (item.getItemId()) {
 
             case android.R.id.home:
-                mSlidingMenu.openMenu();
+                mSlidingMenu.setToggle();
                 break;
             default:
 
