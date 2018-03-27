@@ -1,6 +1,7 @@
 package com.nextoneday.customview.view;
 
 import android.content.Context;
+import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.ViewDragHelper;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -182,9 +183,44 @@ public class SlidingMenu extends FrameLayout {
         public void onViewReleased(View releasedChild, float xvel, float yvel) {
             Log.d(TAG, "onViewReleased");
 
-
+            //当拖动大于临界时， 打开侧滑菜单，
+//            当拖动小于临界值时，关闭侧滑菜单
+            int thres= mContent.getMeasuredWidth()/2;
+            if(mContent.getLeft()>=thres){
+//                打开
+                openMenu();
+            }else{
+//                关闭
+                closeMenu();
+            }
         }
 
 
     };
+
+    /**
+     * 打开，平滑的滑动
+     */
+    public void openMenu() {
+        int finalleft =mMenu.getMeasuredWidth();
+        mHelper.smoothSlideViewTo(mContent,finalleft,0);
+        invalidate();
+    }
+
+    private void closeMenu() {
+        mHelper.smoothSlideViewTo(mContent,0,0);
+        invalidate();
+    }
+
+    /**
+     * 计算滑动偏移量平滑移动
+     */
+    @Override
+    public void computeScroll() {
+
+        if(mHelper.continueSettling(true)){
+//            invalidate();
+            ViewCompat.postInvalidateOnAnimation(this);
+        }
+    }
 }

@@ -6,7 +6,10 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 
 import com.nextoneday.customview.fragment.HistogramFragment;
 import com.nextoneday.customview.fragment.LoadingFragment;
@@ -14,11 +17,12 @@ import com.nextoneday.customview.fragment.LockFragment;
 import com.nextoneday.customview.fragment.PieFragment;
 import com.nextoneday.customview.fragment.SwitchFragment;
 import com.nextoneday.customview.view.PieView;
+import com.nextoneday.customview.view.SlidingMenu;
 
 import java.util.ArrayList;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements Toolbar.OnMenuItemClickListener {
 
     private PieView mPieview;
     private ViewPager mViewPager;
@@ -26,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     public String[] titles = {"饼图","下拉框","进度条","切换开关","滑动解锁"};
 
     private TabLayout mTablayout;
+    private SlidingMenu mSlidingMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,10 +42,30 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+
+            case android.R.id.home:
+                mSlidingMenu.openMenu();
+                break;
+            default:
+
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+
+    }
+
     private void initView() {
+        mSlidingMenu = findViewById(R.id.slidingMenu);
         mViewPager = findViewById(R.id.viewpager);
         mTablayout = findViewById(R.id.tablayout);
-
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
     }
 
@@ -93,4 +118,9 @@ public class MainActivity extends AppCompatActivity {
 //        mViewPager.setCurrentItem(mAl.size()-1);
     }
 
+
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        return false;
+    }
 }
