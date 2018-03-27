@@ -1,6 +1,7 @@
 package com.nextoneday.customview;
 
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -128,11 +129,12 @@ public class MainActivity extends AppCompatActivity {
         DatePickerDialog datePickerDialog = new DatePickerDialog(MainActivity.this,
                 new DatePickerDialog.OnDateSetListener() {
 
+                    @SuppressLint("WrongConstant")
                     @Override
                     public void onDateSet(DatePicker view, int year, int monthOfYear,
                                           int dayOfMonth) {
                         Toast.makeText(MainActivity.this,
-                                year + "年" + (monthOfYear + 1) + "月" + dayOfMonth + "日", 0).show();
+                                year + "年" + (monthOfYear + 1) + "月" + dayOfMonth + "日", 10).show();
                     }
                 },
                 2015, 8, 21);
