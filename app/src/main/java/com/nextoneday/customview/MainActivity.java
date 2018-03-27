@@ -1,6 +1,7 @@
 package com.nextoneday.customview;
 
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -10,6 +11,8 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.DatePicker;
+import android.widget.Toast;
 
 import com.nextoneday.customview.fragment.HistogramFragment;
 import com.nextoneday.customview.fragment.LoadingFragment;
@@ -22,12 +25,12 @@ import com.nextoneday.customview.view.SlidingMenu;
 import java.util.ArrayList;
 
 
-public class MainActivity extends AppCompatActivity implements Toolbar.OnMenuItemClickListener {
+public class MainActivity extends AppCompatActivity {
 
     private PieView mPieview;
     private ViewPager mViewPager;
     private ArrayList<Fragment> mAl;
-    public String[] titles = {"饼图","下拉框","进度条","切换开关","滑动解锁"};
+    public String[] titles = {"饼图", "下拉框", "进度条", "切换开关", "滑动解锁"};
 
     private TabLayout mTablayout;
     private SlidingMenu mSlidingMenu;
@@ -71,6 +74,7 @@ public class MainActivity extends AppCompatActivity implements Toolbar.OnMenuIte
 
     private void initDatas() {
 
+        showDialog();
         mAl = new ArrayList<>();
 
         mAl.add(PieFragment.newinstance());
@@ -94,14 +98,14 @@ public class MainActivity extends AppCompatActivity implements Toolbar.OnMenuIte
 
             @Override
             public CharSequence getPageTitle(int position) {
-              return  titles[position];
+                return titles[position];
             }
         });
 
         mTablayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                mViewPager.setCurrentItem(tab.getPosition(),true);
+                mViewPager.setCurrentItem(tab.getPosition(), true);
             }
 
             @Override
@@ -118,9 +122,24 @@ public class MainActivity extends AppCompatActivity implements Toolbar.OnMenuIte
 //        mViewPager.setCurrentItem(mAl.size()-1);
     }
 
+    //显示一个dialog
+    private void showDialog() {
 
-    @Override
-    public boolean onMenuItemClick(MenuItem item) {
-        return false;
+        DatePickerDialog datePickerDialog = new DatePickerDialog(MainActivity.this,
+                new DatePickerDialog.OnDateSetListener() {
+
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int monthOfYear,
+                                          int dayOfMonth) {
+                        Toast.makeText(MainActivity.this,
+                                year + "年" + (monthOfYear + 1) + "月" + dayOfMonth + "日", 0).show();
+                    }
+                },
+                2015, 8, 21);
+        //Date和Time只用show()  不用create()
+        datePickerDialog.show();
+
     }
+
+
 }
