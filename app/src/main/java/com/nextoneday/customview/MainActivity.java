@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
     private PieView mPieview;
     private ViewPager mViewPager;
     private ArrayList<Fragment> mAl;
-    public String[] titles = {"饼图","下拉选择框","进度条","切换开关","滑动解锁"};
+    public String[] titles = {"饼图","下拉框","进度条","切换开关","滑动解锁"};
 
     private TabLayout mTablayout;
 
@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        mViewPager.setCurrentItem(mAl.size()-1);
+//        mViewPager.setCurrentItem(mAl.size()-1);
     }
 
 }
