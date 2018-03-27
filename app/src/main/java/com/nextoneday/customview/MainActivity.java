@@ -20,6 +20,7 @@ import com.nextoneday.customview.fragment.LoadingFragment;
 import com.nextoneday.customview.fragment.LockFragment;
 import com.nextoneday.customview.fragment.PieFragment;
 import com.nextoneday.customview.fragment.SwitchFragment;
+import com.nextoneday.customview.view.DialogView;
 import com.nextoneday.customview.view.PieView;
 import com.nextoneday.customview.view.SlidingMenu;
 
@@ -75,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void initDatas() {
 
-        showDialog();
+//        showDialog();
         mAl = new ArrayList<>();
 
         mAl.add(PieFragment.newinstance());
@@ -126,21 +127,24 @@ public class MainActivity extends AppCompatActivity {
     //显示一个dialog
     private void showDialog() {
 
-        DatePickerDialog datePickerDialog = new DatePickerDialog(MainActivity.this,
-                new DatePickerDialog.OnDateSetListener() {
+//        DatePickerDialog datePickerDialog = new DatePickerDialog(MainActivity.this,
+//                new DatePickerDialog.OnDateSetListener() {
+//
+//                    @SuppressLint("WrongConstant")
+//                    @Override
+//                    public void onDateSet(DatePicker view, int year, int monthOfYear,
+//                                          int dayOfMonth) {
+//                        Toast.makeText(MainActivity.this,
+//                                year + "年" + (monthOfYear + 1) + "月" + dayOfMonth + "日", 10).show();
+//                    }
+//                },
+//                2015, 8, 21);
+//        //Date和Time只用show()  不用create()
+//        datePickerDialog.show();
 
-                    @SuppressLint("WrongConstant")
-                    @Override
-                    public void onDateSet(DatePicker view, int year, int monthOfYear,
-                                          int dayOfMonth) {
-                        Toast.makeText(MainActivity.this,
-                                year + "年" + (monthOfYear + 1) + "月" + dayOfMonth + "日", 10).show();
-                    }
-                },
-                2015, 8, 21);
-        //Date和Time只用show()  不用create()
-        datePickerDialog.show();
+        DialogView dialogView  = new DialogView(this,R.style.update_dialog);
 
+        dialogView.show();
     }
 
 
