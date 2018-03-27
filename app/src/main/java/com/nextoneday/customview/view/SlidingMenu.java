@@ -7,13 +7,13 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.FrameLayout;
+import android.view.ViewGroup;
 
 /**
  * Created by Administrator on 2018/3/26.
  */
 
-public class SlidingMenu extends FrameLayout {
+public class SlidingMenu extends ViewGroup {
 
     private static final String TAG = "SlidingMenu";
 
@@ -50,7 +50,6 @@ public class SlidingMenu extends FrameLayout {
      */
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
-        super.onLayout(changed, l, t, r, b);
 
         mMenu = getChildAt(0);
         mMenu.layout(-mMenu.getMeasuredWidth(), 0, 0, mMenu.getMeasuredHeight());
