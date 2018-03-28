@@ -82,30 +82,30 @@ public class SlidingMenu extends ViewGroup {
     public boolean onInterceptTouchEvent(MotionEvent ev) {
         Log.d(TAG, "onInterceptTouchEvent");
 
-        switch (ev.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                mDownX = ev.getX();
-                mDownY = ev.getY();
-                // actiondown 被消费了，ViewDragHelper 就接收不到了，需要手动传入
-                mHelper.processTouchEvent(ev);
-                break;
-            case MotionEvent.ACTION_MOVE:
-                float moveX = ev.getX();
-                float moveY = ev.getY();
-                float dx = Math.abs(moveX - mDownX);
-                float dy = Math.abs(moveY - mDownY);
-
-                if (dx > dy) {
-                    //水平滑动 拦截
-                    // TODO: 2018/3/27 需要判断是不是viewpager这种情况，
-                    return true;
-                }
-                break;
-            case MotionEvent.ACTION_UP:
-                break;
-        }
-//        return mHelper.shouldInterceptTouchEvent(ev);
-        return false;
+//        switch (ev.getAction()) {
+//            case MotionEvent.ACTION_DOWN:
+//                mDownX = ev.getX();
+//                mDownY = ev.getY();
+//                // actiondown 被消费了，ViewDragHelper 就接收不到了，需要手动传入
+//                mHelper.processTouchEvent(ev);
+//                break;
+//            case MotionEvent.ACTION_MOVE:
+//                float moveX = ev.getX();
+//                float moveY = ev.getY();
+//                float dx = Math.abs(moveX - mDownX);
+//                float dy = Math.abs(moveY - mDownY);
+//
+//                if (dx > dy) {
+//                    //水平滑动 拦截
+//                    // TODO: 2018/3/27 需要判断是不是viewpager这种情况，
+//                    return true;
+//                }
+//                break;
+//            case MotionEvent.ACTION_UP:
+//                break;
+//        }
+        return mHelper.shouldInterceptTouchEvent(ev);
+//        return false;
     }
 
     ViewDragHelper.Callback mCallback = new ViewDragHelper.Callback() {
