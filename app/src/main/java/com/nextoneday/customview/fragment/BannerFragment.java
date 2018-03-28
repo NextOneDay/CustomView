@@ -4,18 +4,21 @@ import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.nextoneday.customview.DeleteAdapter;
 import com.nextoneday.customview.R;
 
 import java.util.ArrayList;
-import java.util.concurrent.Executors;
+import java.util.List;
 import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Created by nextonedaygg on 2018/3/27.
@@ -30,6 +33,8 @@ public class BannerFragment extends ViewFragment implements ViewPager.OnPageChan
     private ScheduledExecutorService scheduledExecutorService;
     private int currentItem;
     private MyHandler mMyHandler;
+    private RecyclerView mRecycler;
+    private List<String> mDelete;
 
     @Override
     protected void initView(View view) {
@@ -38,6 +43,9 @@ public class BannerFragment extends ViewFragment implements ViewPager.OnPageChan
         mTvTitle = view.findViewById(R.id.tv_title);
         mLlPoint = view.findViewById(R.id.ll_point);
         mMyHandler = new MyHandler();
+        mRecycler = view.findViewById(R.id.recycler);
+        mRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mRecycler.addItemDecoration(new DividerItemDecoration(getActivity(),DividerItemDecoration.VERTICAL));
     }
 
     @Override
@@ -52,7 +60,6 @@ public class BannerFragment extends ViewFragment implements ViewPager.OnPageChan
     protected void initdata() {
 
         viewdata();
-
         mTvTitle.setText(title[0]);
 
         mViewPager.addOnPageChangeListener(this);
@@ -81,6 +88,16 @@ public class BannerFragment extends ViewFragment implements ViewPager.OnPageChan
             }
 
         });
+        initRecyclerData();
+    }
+
+    private void initRecyclerData() {
+        mDelete = new ArrayList();
+        for (int i = 0; i < 10; i++) {
+            mDelete.add("这是要显示的内容");
+        }
+        DeleteAdapter deleteAdapter = new DeleteAdapter(mDelete);
+        mRecycler.setAdapter(deleteAdapter);
     }
 
 
@@ -116,12 +133,12 @@ public class BannerFragment extends ViewFragment implements ViewPager.OnPageChan
     @Override
     public void onStart() {
         super.onStart();
-        scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
-        scheduledExecutorService.scheduleWithFixedDelay(
-                new ViewPageTask(),
-                2,
-                2,
-                TimeUnit.SECONDS);
+//        scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
+//        scheduledExecutorService.scheduleWithFixedDelay(
+//                new ViewPageTask(),
+//                2,
+//                2,
+//                TimeUnit.SECONDS);
     }
 
     /**
@@ -142,21 +159,23 @@ public class BannerFragment extends ViewFragment implements ViewPager.OnPageChan
      * 接收子线程传递过来的数据
      */
 
-    private class MyHandler extends android.os.Handler{
+    private class MyHandler extends android.os.Handler {
         @Override
         public void handleMessage(Message msg) {
             mViewPager.setCurrentItem(currentItem);
         }
-    };
+    }
+
+    ;
 
     @Override
     public void onStop() {
         // TODO Auto-generated method stub
         super.onStop();
-        if (scheduledExecutorService != null) {
-            scheduledExecutorService.shutdown();
-            scheduledExecutorService = null;
-        }
+//        if (scheduledExecutorService != null) {
+//            scheduledExecutorService.shutdown();
+//            scheduledExecutorService = null;
+//        }
     }
 
     public static Fragment newInstance() {
