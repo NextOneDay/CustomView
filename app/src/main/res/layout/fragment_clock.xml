@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:gravity="center"
+    android:background="@android:color/holo_orange_dark"
+    android:layout_height="match_parent">
+
+
+    <com.nextoneday.customview.view.ClockView
+        android:layout_width="300dp"
+        android:background="@color/colorAccent"
+        android:layout_height="300dp" />
+</RelativeLayout>

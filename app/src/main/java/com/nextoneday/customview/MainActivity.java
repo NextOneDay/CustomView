@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.nextoneday.customview.fragment.BannerFragment;
+import com.nextoneday.customview.fragment.ClockFragment;
 import com.nextoneday.customview.fragment.HistogramFragment;
 import com.nextoneday.customview.fragment.LoadingFragment;
 import com.nextoneday.customview.fragment.LockFragment;
@@ -29,7 +30,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
     private PieView mPieview;
     private ViewPager mViewPager;
     private ArrayList<Fragment> mAl;
-    public String[] titles = {"饼图", "下拉框", "进度条", "切换开关", "轮播图","滑动解锁"};
+    public String[] titles = {"饼图", "下拉框", "进度条", "切换开关", "轮播图","滑动解锁","时钟"};
 
     private TabLayout mTablayout;
     private SlidingMenu mSlidingMenu;
@@ -82,6 +83,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         mAl.add(SwitchFragment.newInstance());
         mAl.add(BannerFragment.newInstance());
         mAl.add(LockFragment.newInstance());
+        mAl.add(ClockFragment.newInstance());
 
 
         mTablayout.setupWithViewPager(mViewPager);
