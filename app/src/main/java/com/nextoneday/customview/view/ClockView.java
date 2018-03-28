@@ -35,6 +35,14 @@ public class ClockView extends View {
     private RectF mHour;
     private Paint mRountPaint;
 
+    int rountRect= 6; //圆角矩形的圆心
+    int minWidth = 10; //分的宽带
+    int minLong = 160; //分的长度
+    int senWidth = 8; //秒的宽带
+    int senLong = 180; //秒的长度
+    int hourWidth = 12; //分的宽带
+    int hourLong = 100; //分的长度
+    int guding=20; // 这个是指针尾部的固定长
 
     public ClockView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -52,6 +60,7 @@ public class ClockView extends View {
 
     private void initpaint() {
 
+        //圆的画笔
         mPaint = new Paint();
         mPaint.setStyle(Paint.Style.FILL);
         mPaint.setColor(Color.WHITE);
@@ -59,10 +68,13 @@ public class ClockView extends View {
         mPaint.setAntiAlias(true);
 
 
+        //文字和刻度的画笔
         mTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mTextPaint.setTextAlign(Paint.Align.CENTER);
         mTextPaint.setTextSize(textsize);
 
+
+        //指针的画笔
         mRountPaint= new Paint(Paint.ANTI_ALIAS_FLAG);
 
 
@@ -89,13 +101,7 @@ public class ClockView extends View {
 
     }
 
-    int minWidth = 10; //分的宽带
-    int minLong = 160; //分的长度
-    int senWidth = 8; //秒的宽带
-    int senLong = 180; //秒的长度
-    int hourWidth = 12; //分的宽带
-    int hourLong = 100; //分的长度
-    int guding=20; // 这个是指针尾部的固定长
+
 
     //圆角矩形
     private void initRect() {
@@ -124,7 +130,7 @@ public class ClockView extends View {
     }
 
     //画圆角矩形
-    int rountRect= 6; //圆角矩形的圆心
+
     private void drawRoundRect(Canvas canvas) {
         Calendar calendar= Calendar.getInstance();
 
@@ -144,9 +150,6 @@ public class ClockView extends View {
         canvas.drawRoundRect(mMin, rountRect, rountRect, mRountPaint);
         canvas.restore();
 
-
-
-
         canvas.save();
         canvas.rotate(angleHour);
         canvas.drawRoundRect(mHour, rountRect, rountRect, mRountPaint);
@@ -158,9 +161,15 @@ public class ClockView extends View {
         canvas.drawRoundRect(mSen, rountRect, rountRect, mRountPaint);
         canvas.restore();
 
+        //画指针小圆点
         canvas.drawCircle(0, 0, 10, mRountPaint);
     }
 
+
+    /**
+     * 绘制数字，通过对画布的旋转，使得文字正常显示
+     * @param canvas
+     */
 
     private void drawNumber(Canvas canvas) {
         float x = 0;
@@ -177,6 +186,10 @@ public class ClockView extends View {
     }
 
 
+    /**
+     * 绘制刻度线
+     * @param canvas
+     */
     private void drawTimerLine(Canvas canvas) {
         mTextPaint.setColor(Color.BLACK);
         int startX = 0;
