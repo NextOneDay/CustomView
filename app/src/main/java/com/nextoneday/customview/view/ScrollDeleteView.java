@@ -1,6 +1,7 @@
 package com.nextoneday.customview.view;
 
 import android.content.Context;
+import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.ViewDragHelper;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -14,7 +15,7 @@ import android.view.ViewGroup;
 
 public class ScrollDeleteView extends ViewGroup {
 
-    private final String TAG="ScrollDeleteView";
+    private final String TAG = "ScrollDeleteView";
     private final ViewDragHelper mHelper;
     private View mContentView;
     private View mDeleteView;
@@ -47,66 +48,44 @@ public class ScrollDeleteView extends ViewGroup {
         return true;
 
     }
-    @Override
-    public void computeScroll() {
-        if (mHelper.continueSettling(true)) {
-            invalidate();
-        }
-    }
-
 
 
     private ViewDragHelper.Callback mCallback = new ViewDragHelper.Callback() {
         @Override
         public boolean tryCaptureView(View child, int pointerId) {
-            return child==mContentView;
+            return child == mContentView;
         }
 
 
         @Override
         public int clampViewPositionHorizontal(View child, int left, int dx) {
 
-            Log.d(TAG,"clampViewPositionHorizontal:"+left+":"+dx+"KK"+mDeleteView.getMeasuredWidth());
-                if (left < -mDeleteView.getMeasuredWidth()) {
-                    left = -mDeleteView.getMeasuredWidth();
-                } else if (left > 0) {
-                    left = 0;
-                }
+            Log.d(TAG, "clampViewPositionHorizontal:" + left + ":" + dx + "KK" + mDeleteView.getMeasuredWidth());
+            if (left < -mDeleteView.getMeasuredWidth()) {
+                left = -mDeleteView.getMeasuredWidth();
+            } else if (left > 0) {
+                left = 0;
+            }
 
             return left;
+
         }
 
         @Override
         public void onViewPositionChanged(View changedView, int left, int top, int dx, int dy) {
-            Log.d(TAG,"onViewPositionChanged:"+left+":"+dx+"：："+mDeleteView.getLeft());
+            Log.d(TAG, "onViewPositionChanged:" + left + ":" + dx + "：：" + mDeleteView.getLeft());
             if (changedView == mContentView) {
                 mDeleteView.layout(mDeleteView.getLeft() + dx, mDeleteView.getTop(), mDeleteView.getRight() + dx, mDeleteView.getBottom());
 
-            }else  if(changedView==mDeleteView){
-                mContentView.layout(mContentView.getLeft()+dx,mContentView.getTop(),mContentView.getRight()+dx
-                ,mContentView.getBottom());
+            } else if (changedView == mDeleteView) {
+                mContentView.layout(mContentView.getLeft() + dx, mContentView.getTop(), mContentView.getRight() + dx
+                        , mContentView.getBottom());
             }
+
         }
 
         @Override
         public void onViewReleased(View releasedChild, float xvel, float yvel) {
-//            int threshold = mContentView.getMeasuredWidth()
-//                    - (mDeleteView.getMeasuredWidth() / 2);
-//            Log.d(TAG,"onViewReleased:"+threshold+":"+mDeleteView.getLeft());
-//            if (mDeleteView.getLeft()>threshold){
-//                // 回去
-//                int finalleft=mContentView.getMeasuredWidth();
-//                Log.d(TAG,"onViewReleased:"+finalleft);
-//                mHelper.smoothSlideViewTo(mDeleteView ,finalleft,0);
-//                invalidate();
-//            }else {
-//                //出来
-//                int finalLeft = mContentView.getMeasuredWidth()-mDeleteView.getMeasuredWidth();
-//                Log.d(TAG,"onViewReleased2:"+finalLeft);
-//                mHelper.smoothSlideViewTo(mDeleteView,finalLeft,0);
-//                invalidate();
-//            }
-
             int threshold = mContentView.getMeasuredWidth()
                     - mDeleteView.getMeasuredWidth() / 2;
             if (mDeleteView.getLeft() > threshold) {
@@ -124,5 +103,15 @@ public class ScrollDeleteView extends ViewGroup {
 //                isOpen = true;
             }
         }
+
     };
+
+    @Override
+    public void computeScroll() {
+
+        if (mHelper.continueSettling(true)) {
+//            invalidate();  // 这里用这个可能会出现问题，所以使用下面这个
+            ViewCompat.postInvalidateOnAnimation(this);
+        }
+    }
 }
