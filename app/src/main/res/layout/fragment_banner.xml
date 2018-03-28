@@ -49,13 +49,13 @@
         </LinearLayout>
     </FrameLayout>
 
-    <android.support.v7.widget.RecyclerView
+    <com.nextoneday.customview.view.MyRecyclerView
         android:layout_width="match_parent"
         android:layout_below="@id/ff_container"
         android:id="@+id/recycler"
         android:layout_height="match_parent">
 
 
-    </android.support.v7.widget.RecyclerView>
+    </com.nextoneday.customview.view.MyRecyclerView>
 
 </RelativeLayout>

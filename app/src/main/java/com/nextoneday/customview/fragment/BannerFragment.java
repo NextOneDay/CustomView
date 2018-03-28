@@ -6,7 +6,6 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -15,6 +14,7 @@ import android.widget.TextView;
 
 import com.nextoneday.customview.DeleteAdapter;
 import com.nextoneday.customview.R;
+import com.nextoneday.customview.view.MyRecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +33,7 @@ public class BannerFragment extends ViewFragment implements ViewPager.OnPageChan
     private ScheduledExecutorService scheduledExecutorService;
     private int currentItem;
     private MyHandler mMyHandler;
-    private RecyclerView mRecycler;
+    private MyRecyclerView mRecycler;
     private List<String> mDelete;
 
     @Override

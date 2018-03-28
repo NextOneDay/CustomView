@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
     private PieView mPieview;
     private ViewPager mViewPager;
     private ArrayList<Fragment> mAl;
-    public String[] titles = {"饼图", "下拉框", "进度条", "切换开关", "滑动解锁","轮播图"};
+    public String[] titles = {"饼图", "下拉框", "进度条", "切换开关", "轮播图","滑动解锁"};
 
     private TabLayout mTablayout;
     private SlidingMenu mSlidingMenu;
@@ -80,8 +80,8 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         mAl.add(HistogramFragment.newinstance());
         mAl.add(LoadingFragment.newInstance());
         mAl.add(SwitchFragment.newInstance());
-        mAl.add(LockFragment.newInstance());
         mAl.add(BannerFragment.newInstance());
+        mAl.add(LockFragment.newInstance());
 
 
         mTablayout.setupWithViewPager(mViewPager);

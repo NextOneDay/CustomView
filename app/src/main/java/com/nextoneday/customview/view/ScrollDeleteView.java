@@ -21,7 +21,7 @@ public class ScrollDeleteView extends ViewGroup {
     private View mDeleteView;
     private float mDownX;
     private float mDownY;
-
+    boolean isOpen;
     public ScrollDeleteView(Context context, AttributeSet attrs) {
         super(context, attrs);
         mHelper = ViewDragHelper.create(this, mCallback);
@@ -34,42 +34,6 @@ public class ScrollDeleteView extends ViewGroup {
 
     }
 
-    @Override
-    public boolean dispatchTouchEvent(MotionEvent ev) {
-        Log.d(TAG,"dispatchTouchEvent");
-        return super.dispatchTouchEvent(ev);
-    }
-    private boolean isOpen; //是否处于开启状态
-
-    @Override
-    public boolean onInterceptTouchEvent(MotionEvent ev) {
-        Log.d(TAG,"onInterceptTouchEvent");
-
-        switch (ev.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                mDownX = ev.getX();
-                mDownY = ev.getY();
-                mHelper.processTouchEvent(ev);
-                break;
-            case MotionEvent.ACTION_MOVE:
-                float moveX= ev.getX();
-                float moveY= ev.getY();
-                float dx = Math.abs(mDownX-moveX);
-                float dy = Math.abs(mDownY-moveY);
-                if(dx>dy){
-                    //水平移动
-                    getParent().requestDisallowInterceptTouchEvent(true);
-                    return  super.onInterceptTouchEvent(ev);
-                }else {
-                    //垂直移动
-                }
-                break;
-            default:
-
-                break;
-        }
-       return false;
-    }
 
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
@@ -82,8 +46,9 @@ public class ScrollDeleteView extends ViewGroup {
     }
 
     @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        mHelper.processTouchEvent(event);
+    public boolean onTouchEvent(MotionEvent ev) {
+        Log.d(TAG, "onTouchEvent");
+        mHelper.processTouchEvent(ev);
         return true;
 
     }
@@ -125,6 +90,7 @@ public class ScrollDeleteView extends ViewGroup {
 
         @Override
         public void onViewReleased(View releasedChild, float xvel, float yvel) {
+
             int threshold = mContentView.getMeasuredWidth()
                     - mDeleteView.getMeasuredWidth() / 2;
             if (mDeleteView.getLeft() > threshold) {
