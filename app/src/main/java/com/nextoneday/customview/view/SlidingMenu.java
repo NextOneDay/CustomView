@@ -23,6 +23,11 @@ public class SlidingMenu extends ViewGroup {
     private View mMenu;
     private View mContent;
     private boolean isOpen;
+    private boolean touchMode = false; //触摸模式
+    // 表示可以拖动
+//    public  static final int  TOUCHMODE_FULLSCREEN =0;
+    // 表示不能拖动
+//    public static final int TOUCHMODE_NONE=1 ;
 
     // 通过设置一个值，来提表示拖动多少,比如屏幕的百分比
     public SlidingMenu(Context context, AttributeSet attrs) {
@@ -72,6 +77,7 @@ public class SlidingMenu extends ViewGroup {
 
     }
 
+
     /**
      * 拦截事件
      *
@@ -82,30 +88,35 @@ public class SlidingMenu extends ViewGroup {
     public boolean onInterceptTouchEvent(MotionEvent ev) {
         Log.d(TAG, "onInterceptTouchEvent");
 
-//        switch (ev.getAction()) {
-//            case MotionEvent.ACTION_DOWN:
-//                mDownX = ev.getX();
-//                mDownY = ev.getY();
-//                // actiondown 被消费了，ViewDragHelper 就接收不到了，需要手动传入
-//                mHelper.processTouchEvent(ev);
-//                break;
-//            case MotionEvent.ACTION_MOVE:
-//                float moveX = ev.getX();
-//                float moveY = ev.getY();
-//                float dx = Math.abs(moveX - mDownX);
-//                float dy = Math.abs(moveY - mDownY);
-//
-//                if (dx > dy) {
-//                    //水平滑动 拦截
-//                    // TODO: 2018/3/27 需要判断是不是viewpager这种情况，
-//                    return true;
-//                }
-//                break;
-//            case MotionEvent.ACTION_UP:
-//                break;
-//        }
-        return mHelper.shouldInterceptTouchEvent(ev);
-//        return false;
+        switch (ev.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                mDownX = ev.getX();
+                mDownY = ev.getY();
+                // actiondown 被消费了，ViewDragHelper 就接收不到了，需要手动传入
+                mHelper.processTouchEvent(ev);
+                break;
+            case MotionEvent.ACTION_MOVE:
+                float moveX = ev.getX();
+                float moveY = ev.getY();
+                //算一下左右滑动 ,负向右，正向左
+                float dx = mDownX - moveX;
+                float dy = mDownY - moveY;
+                if (Math.abs(dx) > Math.abs(dy)) {
+                    //水平滑动
+                  if(touchMode){// 表示第一页允许打开菜单
+                      if(!isOpen && dx>0){ //当关闭的时候向右滑动的时候
+                          return false; //不消费
+                      }
+                      return true;
+                  }
+
+                }
+                break;
+            case MotionEvent.ACTION_UP:
+                break;
+        }
+//        return mHelper.shouldInterceptTouchEvent(ev);
+        return false;
     }
 
     ViewDragHelper.Callback mCallback = new ViewDragHelper.Callback() {
@@ -236,5 +247,14 @@ public class SlidingMenu extends ViewGroup {
 //            invalidate();
             ViewCompat.postInvalidateOnAnimation(this);
         }
+    }
+
+    /**
+     * 设置是否滑动，当true 可以滑动，当false的时候不能滑动，即，当是否消费滑动事件
+     *
+     * @param touchmodeFullscreen
+     */
+    public void setTouchMode(boolean touchmodeFullscreen) {
+        this.touchMode = touchmodeFullscreen;
     }
 }

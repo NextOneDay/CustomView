@@ -19,6 +19,8 @@ public class ScrollDeleteView extends ViewGroup {
     private final ViewDragHelper mHelper;
     private View mContentView;
     private View mDeleteView;
+    private float mDownX;
+    private float mDownY;
 
     public ScrollDeleteView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -30,6 +32,43 @@ public class ScrollDeleteView extends ViewGroup {
         measureChildren(widthMeasureSpec, heightMeasureSpec);
         setMeasuredDimension(widthMeasureSpec, heightMeasureSpec);
 
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        Log.d(TAG,"dispatchTouchEvent");
+        return super.dispatchTouchEvent(ev);
+    }
+    private boolean isOpen; //是否处于开启状态
+
+    @Override
+    public boolean onInterceptTouchEvent(MotionEvent ev) {
+        Log.d(TAG,"onInterceptTouchEvent");
+
+        switch (ev.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                mDownX = ev.getX();
+                mDownY = ev.getY();
+                mHelper.processTouchEvent(ev);
+                break;
+            case MotionEvent.ACTION_MOVE:
+                float moveX= ev.getX();
+                float moveY= ev.getY();
+                float dx = Math.abs(mDownX-moveX);
+                float dy = Math.abs(mDownY-moveY);
+                if(dx>dy){
+                    //水平移动
+                    getParent().requestDisallowInterceptTouchEvent(true);
+                    return  super.onInterceptTouchEvent(ev);
+                }else {
+                    //垂直移动
+                }
+                break;
+            default:
+
+                break;
+        }
+       return false;
     }
 
     @Override
@@ -93,14 +132,14 @@ public class ScrollDeleteView extends ViewGroup {
                 int finalLeft = mContentView.getMeasuredWidth();
                 mHelper.smoothSlideViewTo(mDeleteView, finalLeft, 0);
                 invalidate();
-//                isOpen = false;
+                isOpen = false;
             } else {
                 // 滚出来
                 int finalLeft = mContentView.getMeasuredWidth()
                         - mDeleteView.getMeasuredWidth();
                 mHelper.smoothSlideViewTo(mDeleteView, finalLeft, 0);
                 invalidate();
-//                isOpen = true;
+                isOpen = true;
             }
         }
 

@@ -1,8 +1,6 @@
 package com.nextoneday.customview;
 
 
-import android.annotation.SuppressLint;
-import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -12,8 +10,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.widget.DatePicker;
-import android.widget.Toast;
 
 import com.nextoneday.customview.fragment.BannerFragment;
 import com.nextoneday.customview.fragment.HistogramFragment;
@@ -28,7 +24,7 @@ import com.nextoneday.customview.view.SlidingMenu;
 import java.util.ArrayList;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener {
 
     private PieView mPieview;
     private ViewPager mViewPager;
@@ -122,6 +118,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+        mViewPager.addOnPageChangeListener(this);
 
         mViewPager.setCurrentItem(mAl.size()-1);
     }
@@ -150,4 +147,24 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+
+        //当页面切换到第一页的时候运行menu滑动，其他页面的时候不允许滑动
+        if(position==0){
+           mSlidingMenu.setTouchMode(true);
+        }else {
+            mSlidingMenu.setTouchMode(false);
+        }
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+
+    }
 }
