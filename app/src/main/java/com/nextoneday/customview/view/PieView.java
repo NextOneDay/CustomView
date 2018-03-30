@@ -116,13 +116,17 @@ public class PieView extends View {
             Log.d(TAG, currentAngle+"::");
             mLinePaint.getTextBounds(text,0,text.length(),textRect);
             int textheight = textRect.height();
+            float textwidth = mLinePaint.measureText(text);
+
             if (currentAngle >90 && currentAngle<=270){
-                float textwidth = mLinePaint.measureText(text);
+                float point =stopX-textwidth;
+                canvas.drawLine(stopX,stopY,point,stopY,mLinePaint);
+                canvas.drawText(text,point-textwidth,stopY,mLinePaint);
 
-
-                canvas.drawText(text,stopX-textwidth,stopY+textheight,mLinePaint);
-            }else {
-                canvas.drawText(text, stopX, stopY+textheight, mLinePaint);
+            }else  {
+               float  point = stopX+textwidth;
+                canvas.drawLine(stopX,stopY,point,stopY,mLinePaint);
+                canvas.drawText(text, point, stopY, mLinePaint);
             }
         }
 
