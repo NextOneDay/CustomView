@@ -59,6 +59,9 @@ public class EyesView  extends View{
                 2. 再画线框
                 3.画一个中间框
                 4.使用贝塞尔画勾玉？ 或者使用图像叠加？
+                        1) 类似太极一样，先画一个圆，然后再用一个圆给盖住
+                        2) 每一个位置间隔是120个角度
+                        3) 在每个勾玉的原先的位置 使用虚线绘制一个圆
 
                 5。使用旋转动画进行插值器，进行加速旋转
                 6.在选转过程中将勾玉进行连线绘制在一起，
@@ -68,6 +71,8 @@ public class EyesView  extends View{
 
         canvas.translate(mWidth/2,mHeight/2);
         canvas.drawCircle(0,0,radius,mPaint);
+
+
 
     }
 }
