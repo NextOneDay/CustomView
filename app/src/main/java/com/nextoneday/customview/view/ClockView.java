@@ -119,7 +119,7 @@ public class ClockView extends View {
         int senTop = -senLong;
         int senRight = senWidth/2;
         int senBotton = guding;
-        Log.d(TAG, "min :" + senLeft + "::" + senTop + ":::" + senRight + ":::" + senBotton);
+        Log.d(TAG, "sen :" + senLeft + "::" + senTop + ":::" + senRight + ":::" + senBotton);
         mSen = new RectF(senLeft,senTop,senRight,senBotton);
 
 
@@ -127,7 +127,7 @@ public class ClockView extends View {
         int hourTop = -hourLong;
         int hourRight = hourWidth/2;
         int hourBotton = guding;
-        Log.d(TAG, "min :" + hourLeft + "::" + hourTop + ":::" + hourRight + ":::" + hourBotton);
+        Log.d(TAG, "hour :" + hourLeft + "::" + hourTop + ":::" + hourRight + ":::" + hourBotton);
         mHour = new RectF(hourLeft,hourTop,hourRight,hourBotton);
     }
 
@@ -142,7 +142,7 @@ public class ClockView extends View {
         int angleHour = (hour % 12) * 360 / 12; //时针转过的角度
         int angleMinute = minute * 360 / 60; //分针转过的角度
         int angleSecond = second * 360 / 60; //秒针转过的角度
-        Log.d(TAG,"time:"+hour+":"+minute+":"+second);
+
         Log.d(TAG,"angle:"+angleHour+":"+angleMinute+":"+angleSecond);
 
 
