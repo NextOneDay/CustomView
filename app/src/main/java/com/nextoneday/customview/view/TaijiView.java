@@ -24,7 +24,7 @@ public class TaijiView extends View {
     private RectF mRect;
     private Paint mBlackPaint;
     private Paint mWhitePaint;
-    private int degress=10; // 旋转角度
+    private int degress=5; // 旋转角度
     private int time = 50;
 
     public TaijiView(Context context, @Nullable AttributeSet attrs) {

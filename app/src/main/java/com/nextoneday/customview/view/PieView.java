@@ -123,10 +123,9 @@ public class PieView extends View {
                 canvas.drawLine(stopX,stopY,point,stopY,mLinePaint);
                 canvas.drawText(text,point-textwidth,stopY,mLinePaint);
 
-            }else  {
-               float  point = stopX+textwidth;
-                canvas.drawLine(stopX,stopY,point,stopY,mLinePaint);
-                canvas.drawText(text, point, stopY, mLinePaint);
+                canvas.drawText(text,stopX-textwidth,stopY+textheight,mLinePaint);
+            }else {
+                canvas.drawText(text, stopX, stopY+textheight, mLinePaint);
             }
         }
 

@@ -3,6 +3,7 @@ package com.nextoneday.customview.view;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.CornerPathEffect;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.RectF;
@@ -12,16 +13,14 @@ import android.view.View;
 
 /**
  * Created by Administrator on 2018/3/27.
- *
- *
  */
 
-public class EyesView  extends View{
+public class EyeView extends View {
 
     private int mWidth;
     private int mHeight;
 
-    private int size=30; // 边缘留白宽度
+    private int size = 30; // 边缘留白宽度
     private int radius;  // 大圆半径
 
     private Paint mPaint;
@@ -29,12 +28,12 @@ public class EyesView  extends View{
 
     private int minEye;  // 中圆半径
     private int mEyeRadius; // 眼仁半径
-    private int mPoint =20; // 勾玉的半径
+    private int mPoint = 20; // 勾玉的半径
     private RectF mPointRect;
     private Paint mPointPaint; //勾玉
     private Path mPath;
 
-    public EyesView(Context context, @Nullable AttributeSet attrs) {
+    public EyeView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         init();
     }
@@ -51,7 +50,7 @@ public class EyesView  extends View{
         mBackgroup.setStyle(Paint.Style.FILL);
         mBackgroup.setAntiAlias(true);
 
-        mPointPaint= new Paint();
+        mPointPaint = new Paint();
         mPointPaint.setStyle(Paint.Style.FILL);
         mPointPaint.setAntiAlias(true);
     }
@@ -60,25 +59,28 @@ public class EyesView  extends View{
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
-        this.mWidth=w;
-        this.mHeight =h;
-        radius=mWidth/2-size;
+        this.mWidth = w;
+        this.mHeight = h;
+        radius = mWidth / 2 - size;
         mEyeRadius = radius / 4;
-        minEye= (int) (radius*0.7);
+        minEye = (int) (radius * 0.7);
 
 
-        mPointRect = new RectF(-mPoint,-mPoint,mPoint,mPoint);
+        mPointRect = new RectF(-mPoint, minEye - mPoint, mPoint, minEye + mPoint);
 
-
+        CornerPathEffect effect = new CornerPathEffect(10);
+        mPointPaint.setPathEffect(effect);
         mPath = new Path();
-        mPath.addArc(mPointRect,180,180);
-        mPath.lineTo(-mPoint,minEye+mPoint);
+        mPath.addArc(mPointRect, -240, 300);
+        mPath.lineTo(-mPoint / 1.3f, minEye + (mPoint * 1.5f));
     }
-    float degrees=10;
+
+    float degrees = 10;
+
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        canvas.translate(mWidth/2,mHeight/2);
+        canvas.translate(mWidth / 2, mHeight / 2);
         /*
                 1. 先画一个圆
                 2. 再画线框
@@ -93,29 +95,27 @@ public class EyesView  extends View{
                 7.勾玉连在一起后，进行渐变放大，瞬间缩小显示
 
          */
-//        canvas.rotate(degrees);
+        canvas.rotate(degrees);
         drawCircel(canvas);
 
         drawMagatama(canvas);
 
+        postInvalidateDelayed(50);
 
-
-//        postInvalidateDelayed(50);
-//
-//        degrees+=10;
+        degrees += 10;
     }
 
 
     private void drawMagatama(Canvas canvas) {
         canvas.save();
 
-        for (int i = 1; i <=3; i++) {
+        for (int i = 1; i <= 3; i++) {
             //画勾玉
 
 //            canvas.drawCircle(0,minEye,mPoint,mPointPaint);
 
             mPath.close();
-            canvas.drawPath(mPath,mPointPaint);
+            canvas.drawPath(mPath, mPointPaint);
             canvas.rotate(120);
         }
         canvas.restore();
@@ -128,15 +128,15 @@ public class EyesView  extends View{
 //        3.画一个中间框
 
         //画个框
-        canvas.drawCircle(0,0,radius+2,mPaint);
+        canvas.drawCircle(0, 0, radius + 2, mPaint);
 
         //画红色背景
-        canvas.drawCircle(0,0,radius,mBackgroup);
+        canvas.drawCircle(0, 0, radius, mBackgroup);
         //画中间圆
-        canvas.drawCircle(0,0,minEye,mPaint);
+        canvas.drawCircle(0, 0, minEye, mPaint);
 
         // 画眼仁
 //        mPaint.setStyle(Paint.Style.FILL);
-        canvas.drawCircle(0,0,mEyeRadius,mPointPaint);
+        canvas.drawCircle(0, 0, mEyeRadius, mPointPaint);
     }
 }
