@@ -4,13 +4,8 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Path;
 import android.graphics.RectF;
-import android.nfc.Tag;
-import android.os.Build;
 import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
-import android.transition.ArcMotion;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -18,6 +13,8 @@ import android.view.View;
 
 /**
  * Created by nextonedaygg on 2018/3/24.
+ *
+ * 原型 的一个进度加载view
  */
 
 public class CircleLoadingView extends View {

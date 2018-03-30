@@ -1,4 +1,4 @@
-package com.nextoneday.customview;
+package com.nextoneday.customview.activity;
 
 
 import android.os.Bundle;
@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import com.nextoneday.customview.R;
 import com.nextoneday.customview.fragment.BannerFragment;
 import com.nextoneday.customview.fragment.ClockFragment;
 import com.nextoneday.customview.fragment.HistogramFragment;

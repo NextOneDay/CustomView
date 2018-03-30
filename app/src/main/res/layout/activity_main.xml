@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.nextoneday.customview.MainActivity">
+    tools:context="com.nextoneday.customview.activity.MainActivity">
 
     <com.nextoneday.customview.view.SlidingMenu
         android:layout_width="match_parent"

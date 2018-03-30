@@ -12,6 +12,9 @@ import android.view.animation.BounceInterpolator;
 
 import com.nextoneday.customview.R;
 
+/**
+ *  菊花进度加载view
+ */
 
 public class LoadingView extends View {
 

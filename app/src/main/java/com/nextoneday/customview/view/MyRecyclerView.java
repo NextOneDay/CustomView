@@ -9,6 +9,9 @@ import android.view.MotionEvent;
 
 /**
  * Created by Administrator on 2018/3/28.
+ *
+ *  自定义的recycler ，用来请求上层viewpager 不进行拦截，传入层左右滑动事件，
+ *  让子view 自己来处理这个事件
  */
 
 public class MyRecyclerView extends RecyclerView {

@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.nextoneday.customview.DeleteAdapter;
+import com.nextoneday.customview.adapter.DeleteAdapter;
 import com.nextoneday.customview.R;
 import com.nextoneday.customview.view.MyRecyclerView;
 

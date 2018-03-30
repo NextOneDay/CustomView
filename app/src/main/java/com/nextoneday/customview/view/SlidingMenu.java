@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 
 /**
  * Created by Administrator on 2018/3/26.
+ * 使用viewdraghelper 来处理的侧滑菜单，
+ * 处理了与子view viewpager之间的滑动冲突
  */
 
 public class SlidingMenu extends ViewGroup {

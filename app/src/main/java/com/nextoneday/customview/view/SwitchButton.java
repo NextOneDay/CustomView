@@ -20,6 +20,10 @@ import android.widget.Checkable;
 
 import com.nextoneday.customview.R;
 
+/**
+ * 网上一个很厉害的选择按钮，能够支持自定义颜色，开关动画等
+ */
+
 public class SwitchButton extends View implements Checkable {
     private static final int DEFAULT_WIDTH = dp2pxInt(58);
     private static final int DEFAULT_HEIGHT = dp2pxInt(36);
@@ -158,7 +162,6 @@ public class SwitchButton extends View implements Checkable {
         if (typedArray != null) {
             typedArray.recycle();
         }
-
 
         paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         buttonPaint = new Paint(Paint.ANTI_ALIAS_FLAG);

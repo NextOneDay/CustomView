@@ -20,7 +20,7 @@ import java.util.ArrayList;
 /**
  * Created by Administrator on 2018/3/22.
  * <p>
- * 一个简单小饼图
+ * 一个简单小饼图 , 传入数据，进行绘制饼图，以及数据文字等
  */
 
 public class PieView extends View {

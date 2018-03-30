@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 
 /**
  * 默认的是content在上面，memu在下面
+ * 这是hongyang 大神的侧滑菜单
  */
 public class LeftDrawerLayout extends ViewGroup
 {

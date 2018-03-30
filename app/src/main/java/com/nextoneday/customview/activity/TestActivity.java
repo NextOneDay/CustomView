@@ -1,8 +1,10 @@
-package com.nextoneday.customview;
+package com.nextoneday.customview.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+
+import com.nextoneday.customview.R;
 
 /**
  * Created by nextonedaygg on 2018/3/26.

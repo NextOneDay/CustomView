@@ -14,6 +14,8 @@ import java.util.Calendar;
 
 /**
  * Created by nextonedaygg on 2018/3/28.
+ *
+ *  这是一个时钟的view
  */
 
 public class ClockView extends View {

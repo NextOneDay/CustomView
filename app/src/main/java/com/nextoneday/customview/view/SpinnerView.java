@@ -22,7 +22,7 @@ import java.util.ArrayList;
 /**
  * Created by Administrator on 2018/3/23.
  *
- *
+ *这是一个 组合控件， 通过下拉才能选择条目，设置进输入框上
  * 还应该提供一个接口回调，然后外部进行选择监听
  * 删除监听，
  */

@@ -1,6 +1,5 @@
 package com.nextoneday.customview.view;
 
-import android.animation.Animator;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Canvas;
@@ -14,6 +13,8 @@ import android.view.View;
 
 /**
  * Created by nextonedaygg on 2018/3/24.
+ *
+ * 一个简陋的仿选择开关
  */
 
 public class SwitchToggleView extends View implements View.OnClickListener {

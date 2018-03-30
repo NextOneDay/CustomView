@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 
 /**
  * Created by Administrator on 2018/3/28.
+ *
+ *  侧滑删除，类似qq的那种
  */
 
 public class ScrollDeleteView extends ViewGroup {

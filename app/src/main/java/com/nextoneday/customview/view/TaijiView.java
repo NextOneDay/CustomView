@@ -11,6 +11,8 @@ import android.view.View;
 
 /**
  * Created by Administrator on 2018/3/30.
+ *
+ * 太极视图，通过传入间隔时间和角度，能够进行自动旋转
  */
 
 public class TaijiView extends View {
