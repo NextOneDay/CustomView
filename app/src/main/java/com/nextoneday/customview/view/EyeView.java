@@ -65,7 +65,6 @@ public class EyeView extends View {
         mEyeRadius = radius / 4;
         minEye = (int) (radius * 0.7);
 
-
         mPointRect = new RectF(-mPoint, minEye - mPoint, mPoint, minEye + mPoint);
 
         CornerPathEffect effect = new CornerPathEffect(10);
@@ -86,9 +85,8 @@ public class EyeView extends View {
                 2. 再画线框
                 3.画一个中间框
                 4.使用贝塞尔画勾玉？ 或者使用图像叠加？
-                        1) 类似太极一样，先画一个圆，然后再用一个圆给盖住
-                        2) 每一个位置间隔是120个角度
-                        3) 在每个勾玉的原先的位置 使用虚线绘制一个圆
+                        1)使用path 先画个半圆，再画个点，连起来，
+                        2)再用 CornerPathEffect 让直线角变得平滑
 
                 5。使用旋转动画进行插值器，进行加速旋转
                 6.在选转过程中将勾玉进行连线绘制在一起，
