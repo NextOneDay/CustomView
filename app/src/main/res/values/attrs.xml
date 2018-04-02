@@ -43,4 +43,12 @@
         <attr name="sb_background" format="reference|color"/>
         <attr name="sb_enable_effect" format="reference|boolean"/>
     </declare-styleable>
+
+
+        <declare-styleable name="PieChartView">
+            <attr name="pie_radius" format="dimension" />
+            <attr name="centerCircle_radius" format="dimension"/>
+            <attr name="textSize" format="dimension"/>
+            <attr name="shaderSize" format="dimension"/>
+        </declare-styleable>
 </resources>

@@ -1,12 +1,13 @@
 package com.nextoneday.customview.view;
 
+import android.animation.ValueAnimator;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.RectF;
-import android.icu.text.LocaleDisplayNames;
 import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
@@ -16,7 +17,6 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import com.nextoneday.customview.bean.PieData;
-import com.nextoneday.customview.util.MathUtil;
 
 import java.util.ArrayList;
 
@@ -29,15 +29,27 @@ import java.util.ArrayList;
 public class PieView extends View {
 
     private static final String TAG = "PieView";
+    private static final float DEFAULT_START_ANGLE = 45;
 
     public int colors[] = {Color.RED, Color.BLACK, Color.GRAY, Color.CYAN, Color.GREEN, Color.BLUE};
 
     private Paint mPaint;
     private int mWidth; //宽
     private int mHight; // 高
-    private float startAngle = 0;
+    private float startAngle = 45;
     private ArrayList<PieData> mData; //数据集
     private Paint mLinePaint;
+    private int mTouchSize = 20;
+    private RectF mRect;
+    private float r;
+    private RectF mTouchRect; //点击后的矩形
+    private ValueAnimator animator; // 点击开始动画
+    private float mCurrentAngle;
+    private float curtFraction;
+    private int sum;
+    private float mDownX;
+    private float mDownY;
+    private int index;
 
     public PieView(Context context) {
         super(context);
@@ -47,6 +59,7 @@ public class PieView extends View {
     public PieView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         initPaint();
+        initAnimator();
     }
 
     public PieView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
@@ -63,6 +76,10 @@ public class PieView extends View {
         super.onSizeChanged(w, h, oldw, oldh);
         this.mWidth = w;
         this.mHight = h;
+        // 饼状图半径
+        r = (float) (Math.min(mWidth, mHight) / 2 * 0.6);
+        mRect = new RectF(-r, -r, r, r);
+        mTouchRect = new RectF(-r - mTouchSize, -r - mTouchSize, r + mTouchSize, r + mTouchSize);
     }
 
     /**
@@ -84,6 +101,21 @@ public class PieView extends View {
     // 获取text的高度的rect
     Rect textRect = new Rect();
 
+    private void initAnimator() {
+
+        animator = ValueAnimator.ofFloat(0, 1f);
+        animator.setDuration(1000);
+        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                Log.d(TAG, "startAnimation");
+                curtFraction = animation.getAnimatedFraction();
+//                startAngle = DEFAULT_START_ANGLE;
+                invalidate();
+            }
+        });
+    }
+
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
@@ -94,19 +126,22 @@ public class PieView extends View {
         }
         //把画布移动到中心
         canvas.translate(mWidth / 2, mHight / 2);
-        float r = (float) (Math.min(mWidth, mHight) / 2 * 0.6);  // 饼状图半径
 
-        RectF rect = new RectF(-r, -r, r, r);
-
-        float currentAngle = startAngle;
+        mCurrentAngle = startAngle;
         int lineLength = 30;
         for (int x = 0; x < mData.size(); x++) {
             PieData pieData = mData.get(x);
             mPaint.setColor(pieData.color);
-            canvas.drawArc(rect, currentAngle, pieData.angle, true, mPaint);
+            pieData.angle = (float) (360 * curtFraction * pieData.value / sum);
+            if (x == index) {
+                canvas.drawArc(mTouchRect, mCurrentAngle, pieData.angle, true, mPaint);
+            } else {
+                canvas.drawArc(mRect, mCurrentAngle, pieData.angle, true, mPaint);
+
+            }
 
             // 画线
-            double angle = Math.toRadians(currentAngle + pieData.angle / 2);
+            double angle = Math.toRadians(mCurrentAngle + pieData.angle / 2);
             float startX = (float) (r * Math.cos(angle));
             float startY = (float) (r * Math.sin(angle));
             Log.d(TAG, angle + ":" + startX + ":" + startY);
@@ -114,15 +149,15 @@ public class PieView extends View {
             float stopY = (float) ((r + lineLength) * Math.sin(angle));
             canvas.drawLine(startX, startY, stopX, stopY, mLinePaint);
 
-            currentAngle += pieData.angle;
+            mCurrentAngle += pieData.angle;
             // 画文字
             String text = String.format("%.1f", pieData.percentage) + "%";
-            Log.d(TAG, currentAngle + "::");
+            Log.d(TAG, mCurrentAngle + "::");
             mLinePaint.getTextBounds(text, 0, text.length(), textRect);
             int textheight = textRect.height();
             float textwidth = mLinePaint.measureText(text);
 
-            if (currentAngle > 70 && currentAngle <= 300) {
+            if (mCurrentAngle > 70 && mCurrentAngle <= 300) {
                 float point = stopX - textwidth;
                 canvas.drawLine(stopX, stopY, point, stopY, mLinePaint);
                 canvas.drawText(text, point - textwidth, stopY, mLinePaint);
@@ -141,29 +176,72 @@ public class PieView extends View {
 
             //在down 的时候获取到点所对应位置
             case MotionEvent.ACTION_DOWN:
-                float downX = event.getX();
-                float downY = event.getY();
-                Log.d(TAG, downX + "and：：：：" + downY);
-                //用触摸到的点减去 view 的一半，得到从原心到触摸点的位置的两条边
-                downX=downX-mWidth/2;
-                downY=downY-mHight/2;
-//                354.0 184.0
-//                54.0  -116.0
-                Log.d(TAG, downX + "new:" + downY);
-                float touchAngle = MathUtil.getTouchAngle(downX, downY);
-                //求斜边
-                float touchRadius = (float) Math.sqrt(downX * downY + downX * downY);
+                mDownX = event.getX();
+                mDownY = event.getY();
+
+
                 break;
 
-            case MotionEvent.ACTION_MOVE:
-                break;
             case MotionEvent.ACTION_UP:
+                setDrawingCacheEnabled(true);
+                Bitmap bitmap = getDrawingCache();
+                if (bitmap == null) {
+                    Log.w(TAG, "bitmap == null");
+                    break;
+                }
+                int pixel = bitmap.getPixel((int) mDownX, (int) mDownY);
+                setDrawingCacheEnabled(false);
+
+                int i = 0;
+                for (PieData pie : mData) {
+                    if (pixel == pie.color) {
+                        index = i;
+                        invalidate();
+//                        onTouchPie(i);
+
+                        break;
+                    }
+                    i++;
+                }
+
                 break;
         }
 
-        return super.onTouchEvent(event);
+        return true;
 
     }
+
+    /**
+     * touch transfer
+     *
+     * @param i index for params list
+     */
+//    private void onTouchPie(int i) {
+//        index = i;
+//        curtFractionTouch = 1f;
+//        curtFractionTouch2 = 0f;
+//
+////        float angle = getRotationAngle(i);
+//
+//        ValueAnimator animatorRotation;
+//        animatorRotation = ValueAnimator.ofFloat(mStartAngle, mStartAngle + angle);
+//        animatorRotation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+//            @Override
+//            public void onAnimationUpdate(ValueAnimator animation) {
+//                mStartAngle = (Float) animation.getAnimatedValue();
+//                invalidate();
+//            }
+//        });
+//
+//        int time = (int) (1000 * Math.abs(angle) / 360);
+//
+//        animatorRotation.setDuration(time);
+//        animatorTouch.setStartDelay(time);
+//
+//        animatorRotation.start();
+//        animatorTouch.start();
+//    }
+
 
     /**
      * 设置数据
@@ -175,6 +253,7 @@ public class PieView extends View {
 
         this.mData = arrayList;
         //根据传入的值，给其他属性进行获取数据
+        this.sum = sum;
         for (int x = 0; x < arrayList.size(); x++) {
             PieData pieData = arrayList.get(x);
             pieData.color = colors[x];
@@ -194,5 +273,9 @@ public class PieView extends View {
 
     public void setColors(int[] colors) {
         this.colors = colors;
+    }
+
+    public void startAnimation() {
+        animator.start();
     }
 }

@@ -127,7 +127,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         });
         mViewPager.addOnPageChangeListener(this);
 
-        mViewPager.setCurrentItem(mAl.size()-1);
+//        mViewPager.setCurrentItem(mAl.size()-1);
     }
 
     //显示一个dialog

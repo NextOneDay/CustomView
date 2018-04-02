@@ -47,4 +47,8 @@
     <dimen name="sp_19">19sp</dimen>
     <dimen name="sp_45">45sp</dimen>
 
+    <dimen name="pie_default_radius">100dp</dimen>
+    <dimen name="centerCircle_radius">52dp</dimen>
+    <dimen name="text_size">16sp</dimen>
+    <dimen name="shader_size">6dp</dimen>
 </resources>
