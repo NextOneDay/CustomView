@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.nextoneday.customview.R;
+import com.nextoneday.customview.fragment.AlipayFragment;
 import com.nextoneday.customview.fragment.BannerFragment;
 import com.nextoneday.customview.fragment.CircleMenuFragment;
 import com.nextoneday.customview.fragment.ClockFragment;
@@ -34,7 +35,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
     private PieView mPieview;
     private ViewPager mViewPager;
     private ArrayList<Fragment> mAl;
-    public String[] titles = {"饼图", "下拉框", "进度条", "切换开关", "轮播图","滑动解锁","时钟","太极","写轮眼","圆形菜单"};
+    public String[] titles = {"饼图", "下拉框", "进度条", "切换开关", "轮播图","滑动解锁","时钟","太极","写轮眼","圆形菜单","滑动UI"};
 
     private TabLayout mTablayout;
     private SlidingMenu mSlidingMenu;
@@ -91,6 +92,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         mAl.add(TaijiFragment.newInstance());
         mAl.add(EyesFragment.newInstance());
         mAl.add(CircleMenuFragment.newInstance());
+        mAl.add(AlipayFragment.newInstance());
 
         mTablayout.setupWithViewPager(mViewPager);
         mViewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
@@ -118,7 +120,6 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
-
             }
 
             @Override
