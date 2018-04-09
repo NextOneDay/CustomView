@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
-    android:background="@color/colorPrimary">
+    android:background="@color/colorPrimary"
+    >
 
     <ImageView
         android:id="@+id/iv_zhangdan"
@@ -15,26 +16,26 @@
         android:id="@+id/iv_saoyisao"
         android:layout_width="20dp"
         android:layout_height="20dp"
-        android:layout_marginLeft="20dp"
         android:layout_centerVertical="true"
+        android:layout_marginLeft="20dp"
 
         android:layout_toRightOf="@+id/iv_zhangdan"
         android:src="@drawable/saoyisao" />
 
     <ImageView
+        android:id="@+id/iv_search"
         android:layout_width="20dp"
-        android:layout_marginLeft="20dp"
         android:layout_height="20dp"
         android:layout_centerVertical="true"
-
+        android:layout_marginLeft="20dp"
         android:layout_toRightOf="@+id/iv_saoyisao"
         android:src="@drawable/sousuo" />
 
     <ImageView
+        android:id="@+id/iv_camera"
         android:layout_width="20dp"
         android:layout_height="20dp"
-        android:layout_centerVertical="true"
-
         android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
         android:src="@drawable/zhaoxiang" />
 </RelativeLayout>

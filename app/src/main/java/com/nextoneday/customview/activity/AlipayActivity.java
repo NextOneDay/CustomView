@@ -46,6 +46,10 @@ public class AlipayActivity extends AppCompatActivity implements AppBarLayout.On
     AppBarLayout mAppbarlayout;
     @BindView(R.id.recycler)
     RecyclerView mRecycler;
+    @BindView(R.id.iv_search)
+    ImageView mIvSearch;
+    @BindView(R.id.iv_camera)
+    ImageView mIvCamera;
 
     private RecyclerView mRecyclerView;
     private ArrayList<String> mDelete;
@@ -79,10 +83,32 @@ public class AlipayActivity extends AppCompatActivity implements AppBarLayout.On
 //            折叠
             toolbar2.setVisibility(View.VISIBLE);
             toolbar1.setVisibility(View.GONE);
+            setToolbar2Alpha(255);
+        }else {
+            //折叠和展开之间的状态
+            if(toolbar1.getVisibility()==View.VISIBLE){
+                int alpha = 255 - 155 - Math.abs(verticalOffset);
+                setToolbar1Alpha(alpha);
+            }else if(toolbar2.getVisibility()==View.VISIBLE){
+                int alpha = (int) (255*(Math.abs(verticalOffset)/100f));
+                setToolbar2Alpha(alpha);
+            }
         }
+    }
+
+    private void setToolbar2Alpha(int i) {
+        mIvZhangdan.setAlpha(i);
+        mIvSaoyisao.setAlpha(i);
+        mIvSearch.setAlpha(i);
+        mIvCamera.setAlpha(i);
     }
 
     private void setToolbar1Alpha(int i) {
 
+        mImgZhangdan.setAlpha(i);
+        mImgZhangdanTxt.setAlpha(i);
+        mTongxunlu.setAlpha(i);
+        mJiahao.setAlpha(i);
     }
+
 }
