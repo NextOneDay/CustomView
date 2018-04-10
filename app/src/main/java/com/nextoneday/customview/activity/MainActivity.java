@@ -1,6 +1,7 @@
 package com.nextoneday.customview.activity;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -10,8 +11,13 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import com.nextoneday.customview.R;
+import com.nextoneday.customview.animation.DrawableAnimationActivity;
+import com.nextoneday.customview.animation.PropertyAnimationActivity;
+import com.nextoneday.customview.animation.ViewAnimationActivity;
 import com.nextoneday.customview.fragment.BannerFragment;
 import com.nextoneday.customview.fragment.CircleMenuFragment;
 import com.nextoneday.customview.fragment.ClockFragment;
@@ -29,7 +35,7 @@ import com.nextoneday.customview.view.SlidingMenu;
 import java.util.ArrayList;
 
 
-public class MainActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener {
+public class MainActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener, View.OnClickListener {
 
     private PieView mPieview;
     private ViewPager mViewPager;
@@ -73,6 +79,15 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         ActionBar actionBar = getSupportActionBar();
         actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
         actionBar.setDisplayHomeAsUpEnabled(true);
+
+        //动画menu点击事件
+
+        TextView drawable = findViewById(R.id.drawable_animation);
+        TextView view = findViewById(R.id.view_animation);
+        TextView property = findViewById(R.id.property_animation);
+        drawable.setOnClickListener(this);
+        view.setOnClickListener(this);
+        property.setOnClickListener(this);
 
     }
 
@@ -173,5 +188,26 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
     @Override
     public void onPageScrollStateChanged(int state) {
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.drawable_animation:
+
+                Intent drawalbe = new Intent(this, DrawableAnimationActivity.class);
+                startActivity(drawalbe);
+                break;
+            case R.id.view_animation:
+                Intent view = new Intent(this, ViewAnimationActivity.class);
+                startActivity(view);
+                break;
+            case R.id.property_animation:
+                Intent property = new Intent(this, PropertyAnimationActivity.class);
+                startActivity(property);
+                break;
+
+
+        }
     }
 }

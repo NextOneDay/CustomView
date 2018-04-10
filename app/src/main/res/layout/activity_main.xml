@@ -12,18 +12,9 @@
         android:id="@+id/slidingMenu"
         android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/menu"
-            android:text="这是Menu"
-            android:background="#88888888"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:textSize="40sp"
-            android:orientation="vertical"
-            android:layout_width="200dp"
-            android:layout_height="match_parent">
-
-        </TextView>
+        <include android:layout_width="200dp"
+            android:layout_height="match_parent"
+            layout="@layout/item_menu_view"/>
 
         <LinearLayout
             android:layout_width="match_parent"
