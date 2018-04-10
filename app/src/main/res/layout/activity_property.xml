@@ -5,10 +5,18 @@
 
 
     <View
+        android:id="@+id/view"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:id="@+id/view"
         android:layout_centerInParent="true"
         android:background="@color/colorPrimary" />
+
+    <Button
+        android:id="@+id/start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:text="start" />
 
 </RelativeLayout>
