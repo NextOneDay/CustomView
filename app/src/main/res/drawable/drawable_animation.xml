@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android"
+    android:oneshot="true">
+
+    <item
+        android:drawable="@drawable/channel1"
+        android:duration="200" />
+    <item
+        android:drawable="@drawable/channel2"
+        android:duration="200" />
+    <item
+        android:drawable="@drawable/channel3"
+        android:duration="200" />
+    <item
+        android:drawable="@drawable/channel4"
+        android:duration="200" />
+    <item
+        android:drawable="@drawable/channel5"
+        android:duration="200" />
+    <item
+        android:drawable="@drawable/channel6"
+        android:duration="200" />
+</animation-list>
