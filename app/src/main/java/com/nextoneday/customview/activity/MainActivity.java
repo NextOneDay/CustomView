@@ -88,6 +88,8 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         drawable.setOnClickListener(this);
         view.setOnClickListener(this);
         property.setOnClickListener(this);
+        TextView alipay = findViewById(R.id.alipay);
+        alipay.setOnClickListener(this);
 
     }
 
@@ -206,7 +208,9 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
                 Intent property = new Intent(this, PropertyAnimationActivity.class);
                 startActivity(property);
                 break;
-
+            case R.id.alipay:
+                Intent intent = new Intent(this, AlipayActivity.class);
+                startActivity(intent);
 
         }
     }

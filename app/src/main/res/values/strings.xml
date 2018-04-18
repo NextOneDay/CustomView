@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">CustomView</string>
+    <string name="app_name">我的View</string>
     <string name="zhangdan">账单</string>
     <string name="saoyisao">扫一扫</string>
     <string name="fukuan">付款</string>

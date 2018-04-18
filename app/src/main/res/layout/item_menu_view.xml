@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#88888888"
+    android:background="@color/colorPrimaryDark"
     android:layout_centerHorizontal="true"
     android:orientation="vertical">
 
@@ -26,6 +26,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/property_animation"
+        android:padding="16dp"
+        android:gravity="center_horizontal"
+        android:text="Property  Animation" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/alipay"
         android:padding="16dp"
         android:gravity="center_horizontal"
         android:text="Property  Animation" />
