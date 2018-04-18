@@ -11,9 +11,11 @@
     <include
         android:layout_height="match_parent"
         layout="@layout/item_menu_view"
+        android:fitsSystemWindows="true"
         android:layout_width="200dp" />
 
     <LinearLayout
+
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
