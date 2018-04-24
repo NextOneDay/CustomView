@@ -2,6 +2,7 @@ package com.nextoneday.customview.activity;
 
 
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
@@ -71,8 +72,14 @@ public class TestActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        Log.d(TAG, "onRestoreInstanceState");
+    }
+
+    @Override
     public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
-        super.onSaveInstanceState(outState, outPersistentState);
+//        super.onSaveInstanceState(outState, outPersistentState);
         Log.d(TAG, "onSaveInstanceState....");
     }
 
@@ -81,5 +88,27 @@ public class TestActivity extends AppCompatActivity {
         super.onDestroy();
         Log.d(TAG, "onDestroy...");
 
+    }
+
+    /**
+     * 当默认的时候，activity横竖屏切换的时候，就走生命周期方法，然后重建一个新的activity，
+     * 会onsaveInstanceState 和 onRestoreSaveInstanceState 方法。
+     * 当清单文件设置了configuration 为orientation|keyboardHidden|screenSize的时候，不会进行生命周期的变化
+     * 而是回调onConfigurationChanged方法
+     * @param newConfig
+     */
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        Log.d(TAG, "onConfigurationChanged-"+newConfig.toString());
+
+        if (this.getResources().getConfiguration().orientation
+                == Configuration.ORIENTATION_LANDSCAPE) {
+
+        }else if (getResources().getConfiguration().orientation==Configuration.ORIENTATION_PORTRAIT){
+
+
+
+        }
     }
 }
