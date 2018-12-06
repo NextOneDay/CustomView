@@ -31,7 +31,7 @@ public class ViewAnimationActivity extends AppCompatActivity implements View.OnC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view);
         mView = findViewById(R.id.view);
-        mStart = findViewById(R.id.start);
+        mStart = (Button) findViewById(R.id.start);
         mStart.setOnClickListener(this);
     }
 

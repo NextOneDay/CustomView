@@ -59,7 +59,7 @@ public class AlipayActivity extends AppCompatActivity implements AppBarLayout.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alipay);
         ButterKnife.bind(this);
-        mRecyclerView = findViewById(R.id.recycler);
+        mRecyclerView = (RecyclerView) findViewById(R.id.recycler);
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mDelete = new ArrayList<>();

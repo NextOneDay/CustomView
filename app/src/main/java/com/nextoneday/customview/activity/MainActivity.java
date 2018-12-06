@@ -19,12 +19,14 @@ import com.nextoneday.customview.animation.DrawableAnimationActivity;
 import com.nextoneday.customview.animation.PropertyAnimationActivity;
 import com.nextoneday.customview.animation.ViewAnimationActivity;
 import com.nextoneday.customview.fragment.BannerFragment;
+import com.nextoneday.customview.fragment.Chart2PictureFragment;
 import com.nextoneday.customview.fragment.CircleMenuFragment;
 import com.nextoneday.customview.fragment.ClockFragment;
 import com.nextoneday.customview.fragment.EyesFragment;
 import com.nextoneday.customview.fragment.HistogramFragment;
 import com.nextoneday.customview.fragment.LoadingFragment;
 import com.nextoneday.customview.fragment.LockFragment;
+import com.nextoneday.customview.fragment.LottieFragment;
 import com.nextoneday.customview.fragment.PieFragment;
 import com.nextoneday.customview.fragment.SwitchFragment;
 import com.nextoneday.customview.fragment.TaijiFragment;
@@ -40,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
     private PieView mPieview;
     private ViewPager mViewPager;
     private ArrayList<Fragment> mAl;
-    public String[] titles = {"饼图", "下拉框", "进度条", "切换开关", "轮播图", "滑动解锁", "时钟", "太极", "写轮眼", "圆形菜单"};
+    public String[] titles = {"lottie","饼图", "下拉框", "进度条", "切换开关", "轮播图", "滑动解锁", "时钟", "太极", "写轮眼", "圆形菜单" };
 
     private TabLayout mTablayout;
     private SlidingMenu mSlidingMenu;
@@ -71,10 +73,10 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
     }
 
     private void initView() {
-        mSlidingMenu = findViewById(R.id.slidingMenu);
-        mViewPager = findViewById(R.id.viewpager);
-        mTablayout = findViewById(R.id.tablayout);
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        mSlidingMenu = (SlidingMenu) findViewById(R.id.slidingMenu);
+        mViewPager = (ViewPager) findViewById(R.id.viewpager);
+        mTablayout = (TabLayout) findViewById(R.id.tablayout);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
@@ -82,13 +84,13 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
 
         //动画menu点击事件
 
-        TextView drawable = findViewById(R.id.drawable_animation);
-        TextView view = findViewById(R.id.view_animation);
-        TextView property = findViewById(R.id.property_animation);
+        TextView drawable = (TextView) findViewById(R.id.drawable_animation);
+        TextView view = (TextView) findViewById(R.id.view_animation);
+        TextView property = (TextView) findViewById(R.id.property_animation);
         drawable.setOnClickListener(this);
         view.setOnClickListener(this);
         property.setOnClickListener(this);
-        TextView alipay = findViewById(R.id.alipay);
+        TextView alipay = (TextView) findViewById(R.id.alipay);
         alipay.setOnClickListener(this);
 
     }
@@ -98,6 +100,8 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
 //        showDialog();
         mAl = new ArrayList<>();
 
+
+        mAl.add(LottieFragment.newInstance());
         mAl.add(PieFragment.newinstance());
         mAl.add(HistogramFragment.newinstance());
         mAl.add(LoadingFragment.newInstance());
@@ -108,6 +112,9 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         mAl.add(TaijiFragment.newInstance());
         mAl.add(EyesFragment.newInstance());
         mAl.add(CircleMenuFragment.newInstance());
+//        mAl.add(Chart2PictureFragment.newInstance());
+
+
 
         mTablayout.setupWithViewPager(mViewPager);
         mViewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {

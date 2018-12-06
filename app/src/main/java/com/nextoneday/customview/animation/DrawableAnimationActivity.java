@@ -24,7 +24,7 @@ public class DrawableAnimationActivity extends AppCompatActivity implements View
         setContentView(R.layout.activity_drawable);
         //帧动画
         mView = findViewById(R.id.view);
-        Button start = findViewById(R.id.start);
+        Button start = (Button) findViewById(R.id.start);
         start.setOnClickListener(this);
     }
 
